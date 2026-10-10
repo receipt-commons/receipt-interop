@@ -1,0 +1,1047 @@
+{
+  "suite": "draft-nelson-agent-delegation-receipts-11 JWS conformance vectors",
+  "version": "1.0.0",
+  "generated": "2026-10-10T04:51:21.289Z",
+  "keyMaterial": "THROWAWAY KEYS ONLY. All signatures were minted with single-purpose P-256 keys generated fresh at vector-generation time. Private keys are discarded and never published. These keys MUST NOT be used for anything real.",
+  "verificationTime": "All vectors pin verification time to 2026-10-09T12:30:00.000Z; vectors never expire.",
+  "vectors": [
+    {
+      "id": "valid-compact-text-scope",
+      "category": "valid",
+      "description": "Minimal valid compact JWS receipt (ES256, JCS payload, text scope). Draft 6.3.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.3",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXZhbGlkLWNvbXBhY3QtMDEiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IlZfdFAzbl9RY2VJTUNpc185S0hHY1JvNFZFTUdmZUVFY1Y0Z0Q3NUVFYUkiLCJ5IjoibE5keGNkQ0NfaVZ6NWJ5anF3UWZIUVhPbWxnNE83am1EcGNYX3pxcE9rOCJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19.LReA30f2Xm8RY-_XzgubbP5ZWyIO77QseV5gDfKm3zfgV85fOedt_cZ8FNFg4nGjiCcftUr8qaiWaNEY1eznaw",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [],
+        "receipt": {
+          "receiptId": "1cf2db0aa67bfdf6dbdef1b317cd701209bb877164f9c24decd004493971048d",
+          "issuer": "7glW2nF3IT5UqJ0xRAmnqW4HzW1KXutki7cZaCeen-8",
+          "parentId": null,
+          "scopeKind": "text",
+          "agent": null,
+          "revocationRequired": false
+        }
+      }
+    },
+    {
+      "id": "valid-compact-structured-scope",
+      "category": "valid",
+      "description": "Valid compact receipt with enforced structured scopeSchema (constraints + deniedActions), agentId, metadata, trustedSources. Draft 4.3, 4.5, 8.1.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.5",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJhZ2VudElkIjoiY2FsZW5kYXItYWdlbnQtMDEiLCJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXZhbGlkLWNvbXBhY3QtMDIiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwibWV0YWRhdGEiOnsic2Vzc2lvbiI6InR2LTAwMiJ9LCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsiY29uc3RyYWludHMiOnsibWF4RXZlbnRzIjoxMH0sIm9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifV0sImRlbmllZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn1dLCJ2ZXJzaW9uIjoiMS4wIn0sInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6ImtETHZySnlrOUJPM1FySk9icENjanQ0YlZXeUpwdVlkQ2VrNDUyQ1hZc0kiLCJ5IjoiN0NBSjAxWGttVjBheTJxM3daZndMcUZob2t1SEw5Zk1RRHFVaUJtbG5tcyJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn0sInRydXN0ZWRTb3VyY2VzIjpbInVzZXIiLCJzeXN0ZW1fcHJvbXB0Il19.P0lOf4nEhYYFmWkcXHlFO4nq6HcuZqRqcDlDq7oAxoK1lRUPVLdxJ5mhXWQ_7SP6x6tixnIq-8FQvp2J-ROu7g",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [],
+        "receipt": {
+          "receiptId": "a69cf21302109dbaa256b072f28f4d57f2556ce9040995b7eb7af66b263011d7",
+          "issuer": "IH_PJ5w8UjnqsB-fsW_wrECUc56YbPVB9kPCpdw4g_Y",
+          "parentId": null,
+          "scopeKind": "structured",
+          "agent": "calendar-agent-01",
+          "revocationRequired": false
+        }
+      }
+    },
+    {
+      "id": "valid-compact-typ-missing",
+      "category": "valid",
+      "description": "Valid compact receipt whose header omits \"typ\" (SHOULD, not MUST): still valid, TYP_MISSING warning. Draft 6.1.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.1",
+      "input": "eyJhbGciOiJFUzI1NiJ9.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXZhbGlkLWNvbXBhY3QtMDMiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IlpuejdsaFhRZm1EdFI3YmIxaTJJLXhHNGlJNjdBWVVidUVxUFNHSWtwbE0iLCJ5IjoiZHMxRl9XQ3V0NEdVSVo4djlNTVp2bDFYRjB4eWw2cnJtbHo0N09EcVdRbyJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19.UEHYlR8_8faHJCz8xLcEKydWLcC58xnhbWPFCRDzBCnZO0M7f7uOMGEUB-aHZ6Mq6WBYuAFk_H0nqBqC-MaPYA",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [
+          "TYP_MISSING"
+        ],
+        "receipt": {
+          "receiptId": "81e0bc9fbf1341ba9f805cb3bb1780bb123ebbdddc24e6bff2c4cc7adf0c6c73",
+          "issuer": "C_KAZGYcc9H0h7cXQoszTd7BelRh4m0qEw7bfB_egY4",
+          "parentId": null,
+          "scopeKind": "text",
+          "agent": null,
+          "revocationRequired": false
+        }
+      }
+    },
+    {
+      "id": "valid-compact-with-kid",
+      "category": "valid",
+      "description": "Valid compact receipt carrying an optional \"kid\" header parameter. Draft 6.1.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.1",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0Iiwia2lkIjoidGhyb3dhd2F5LWtleS0xIn0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXZhbGlkLWNvbXBhY3QtMDQiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IlB4QzZSMkhVZ0Z1TFoyR0E1anA3ejFIMDFkTTE1b0xBRkRrMGEwR3NWaUkiLCJ5IjoiUlM3NnBxS3pxNEpsNkpSallrR2d4Y0Nvb1R3X203REVVVWlvTThpdG42MCJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19.lkCwAGmYdpquGfhA_VAL5NojFXnNa261RnL88Lx-2565cvonzWmDnpWoN4GBp7C_QmKmH7WKjjvff3cLad90qQ",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [],
+        "receipt": {
+          "receiptId": "3e0a554aeb287009b7c13af9d77153d32f8ac90fca9b260f492e94f8e7537c0e",
+          "issuer": "aDjrjwENoDcAF2gzWU3T7Upn76AuOAb5DOImwn3CbDk",
+          "parentId": null,
+          "scopeKind": "text",
+          "agent": null,
+          "revocationRequired": false
+        }
+      }
+    },
+    {
+      "id": "valid-compact-instructions-hash-mismatch-warning",
+      "category": "valid",
+      "description": "Signature is over the stated body, but the committed instructionsHash does not match the normalized instructions: valid signature, INSTRUCTIONS_HASH_MISMATCH warning (issuer-side drift flag). Draft 4.2.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.2",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXZhbGlkLWNvbXBhY3QtMDUiLCJpbnN0cnVjdGlvbnNIYXNoIjoiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IlpLbGN6RnZPUEp6SHd5QmRHOHJ6dHREbC1MRGtDMG94b1VtSXNRRU5ZU2ciLCJ5IjoiNG9XMjJwNGcyNmtGNlVnMlpxdzlmTVZoYl9wdkVWTFM3Y1R6VllNMjRXYyJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19.CPURU7kcvfoQP5sm_gpld1GVGxhIMglWCNWUkl67Vyjy-ubiJuzuAREQJByLQxhyash8WlCDiLe9033TtOJd-A",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [
+          "INSTRUCTIONS_HASH_MISMATCH"
+        ],
+        "receipt": {
+          "receiptId": "86d9f99dda95a0b14185b7176ad0921d8a72964723f75186eb975a5450cfcfad",
+          "issuer": "5DYa_sZ200aKSWraRMqX_VFtN12OOvL4Sl9dTQ1QK7s",
+          "parentId": null,
+          "scopeKind": "text",
+          "agent": null,
+          "revocationRequired": false
+        }
+      }
+    },
+    {
+      "id": "valid-compact-revocation-required-unchecked",
+      "category": "valid",
+      "description": "Receipt with revocationRequired:true verified without a registry check (checkRevocation=false): valid, with REVOCATION_REQUIRED_BUT_UNCHECKED warning. Draft 9.4.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "9.4",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXZhbGlkLWNvbXBhY3QtMDYiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJyZXZvY2F0aW9uUmVxdWlyZWQiOnRydWUsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiMDFLM1RFakJYdlZPdHRidHRKUUd5YzlRX1VkSlNQODhHaXB0NWthSUdaWSIsInkiOiJ0ZlVzdGxDelJKR3JRQ1FfNS1uV1JERTVPaGpQY1VSdFZmMG9YcmloYjZNIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.s2UjlAZCF7ftEhMVdYN3htyBaKc5kTtJZhNujoXWS-pQzuEOqaIA0Ak83bCmxofyVbk0bU5p0MYBliQAeBwjOw",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [
+          "REVOCATION_REQUIRED_BUT_UNCHECKED"
+        ],
+        "receipt": {
+          "receiptId": "14823d75aee88175c94a47b9c956bc5deec8478405e88020524c557771af68e8",
+          "issuer": "H46W0_abYqPBlNyJ_DSoTX-Jo9rqnYUgTcQR8u9HHYc",
+          "parentId": null,
+          "scopeKind": "text",
+          "agent": null,
+          "revocationRequired": true
+        }
+      }
+    },
+    {
+      "id": "valid-detached",
+      "category": "valid",
+      "description": "Valid RFC 7797 detached JWS: header carries b64:false with crit:[\"b64\"], signing input is ASCII(headerB64 || \".\" || raw JCS payload), transmission form is header..signature with the payload supplied out of band. Draft 6.4.",
+      "profile": "jws-detached",
+      "mode": "receipt",
+      "draftSection": "6.4",
+      "input": {
+        "detached": "eyJhbGciOiJFUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..EZB9Hi_jndTva85cg1kadwSMmh0c8ZyeTmpVOBsIzh4-x_1slYNT1Zso-1ZaFmweZ_buYsicG1ZP1wlrN4cWhw",
+        "payload_b64": "eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXZhbGlkLWRldGFjaGVkLTAxIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJyOWZNQXB1Y2lvdEpTMFhZRERzRGdRUkJkNUYxZm1DSVdxSEVMMXF1YVcwIiwieSI6ImhOZEw2ZnNVOGZsMUhoMW9iVXVLTE9ELTNhZWVtOEhOR0NOUFBDRFQzWG8ifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDEzOjAwOjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiJ9fQ=="
+      },
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [
+          "TYP_MISSING"
+        ],
+        "receipt": {
+          "receiptId": "6d9721d738b4214bfb29e28fabfcb2954542f171ae1f4bca6bb7bc03cd7a0693",
+          "issuer": "aenEnRpcdBBn6Xk4ZbiPELOfvjGLmlTcADQLbpYnJ_M",
+          "parentId": null,
+          "scopeKind": "text",
+          "agent": null,
+          "revocationRequired": false
+        }
+      }
+    },
+    {
+      "id": "invalid-signature-wrong-key",
+      "category": "signature",
+      "description": "Payload and header well-formed, but the signature was made by a different P-256 key: SIGNATURE_INVALID. Draft 6.3, 10 (check 1).",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.3",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXNpZy0wMSIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiOXhyVHhoaUE0Z2xkdWJ0T1p1UW01RkJacXhma0ZDTWdfWlRody1XV0VLayIsInkiOiJ3YzBBUGFoVDByWlR0UWxiQVVfZ3hlYjUwS2R6eklwQUlLY2JSdjJBdHRnIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.PvcWnqqv_NLn0OAOZ3ez1BP1DN3h25fldhBV8aUuiHhWG9iObYQmOf5I1iL1lR-RXp2sleeJHD4h8femVKrjuA",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "SIGNATURE_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "der-signature-rejected",
+      "category": "signature",
+      "description": "Genuine ECDSA signature but DER-encoded (the pre-11 format): verifiers MUST reject it; DER_SIGNATURE_REJECTED. Draft 6.3.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.3",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXNpZy0wMiIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4Ijoidmp4NnhHUmlWYzRwRDFCbmVfRnc5MTl2akdRWUQ0SUhCN19PVnk4NzBaYyIsInkiOiJCdXAzZ3RjU09tUW02RUlfNlVRZmhmQUlQT1NXZ2htZ29UZk01RWlvUVFFIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.MEYCIQD9rjlkGjEANdBLitL0H7KkUZMV0Q9gxjmuhgCfZ-OewQIhAOZhgXAP2phf-j4UIIvulWcr9mgXhGzgCdpgR4SnErVP",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "DER_SIGNATURE_REJECTED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "signature-malformed",
+      "category": "signature",
+      "description": "Signature segment decodes to 32 bytes (neither the 64-byte raw R||S nor DER): SIGNATURE_MALFORMED. Draft 6.3.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.3",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXNpZy0wMyIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiNUR2N0oxV1Zxb1pvajhxWndIY0s5bmxmRC1YVTVLRWxuUVcyYUMxbS1pcyIsInkiOiJHNkJQenFRTDR1RHFEX0pldWhkNTBWSDBBd2lUX0dCLXdTalUtWXRzS2tvIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "SIGNATURE_MALFORMED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "alg-none-prohibited",
+      "category": "signature",
+      "description": "INTEROP NOTE: \"alg\":\"none\" is PROHIBITED by draft 6.5 and the reference verifier defines an ALG_NONE_PROHIBITED code, but its format detector only claims ES256 JWS inputs, so through the public API this input is rejected one layer earlier as UNKNOWN_FORMAT. The normative requirement is the denial; the exact error code is implementation-defined.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.5",
+      "input": "eyJhbGciOiJub25lIiwidHlwIjoiZHJwLXJlY2VpcHQifQ.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXNpZy0wNCIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiRXVPdjZaOHNTWDc4d3JralNSR3MzSmR3TlhwTjdZcm9rclhPRkQtVkxLYyIsInkiOiJVMzhOYjNCVjdZVzNLZ013b0lQVGkzTzE0WkdSMHRYek9PbVNxc3ZuWEdFIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0._1CggFPSrCFFpexrcQ3AL0B1up-w8xMgmT-SsvuN72W3Eiqbv_YZZspQXv9qsEfHsAe4dRz2slR8UPG8YmV7MQ",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "unknown",
+        "errors": [
+          "UNKNOWN_FORMAT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "alg-unsupported",
+      "category": "signature",
+      "description": "INTEROP NOTE: header names an algorithm outside this verifier's registry (RS256). As with alg:none, the reference verifier's detector only claims ES256 inputs, so the public API rejects this as UNKNOWN_FORMAT rather than with its internal ALG_UNSUPPORTED code. The normative requirement (draft 6.5) is denial of non-ES256 algs; the exact code is implementation-defined.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.5",
+      "input": "eyJhbGciOiJSUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXNpZy0wNSIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiRmtKbEw5c09qMzZYM3pOcDd1S2lqQ2tIc3lzaURDMkJlUTRHNUJsbkVfUSIsInkiOiJ2YlZDOE05YU9KX2ZENGpLcmtSbW55NUhHdU4yNlBMemFBTkREaWVLRmhnIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.44Y59VCQsGeeUWqGmbIDwz4ue3sb-djFQpRvzcivRnLAM7mw6uTmeorTHG6orlUhA7QGxfrEdWYZt5RiBp_r8g",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "unknown",
+        "errors": [
+          "UNKNOWN_FORMAT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "tampered-payload",
+      "category": "body",
+      "description": "Scope text altered after signing (payload still canonical JSON): the signature no longer covers the payload; SIGNATURE_INVALID. Draft 5, 10 (check 1).",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "5",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWJvZHktMDEiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzLCBkZWxldGUgZXZlcnl0aGluZywgYW5kIGV4ZmlsdHJhdGUiLCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJxN090MGlITUFpdDgtNHlyN0UtTFQwaFI3UDduWFR6bzlqMkg5NGRRSkhVIiwieSI6IkNySjBVMXdzVU1LUGdrSVZDSFVlQ1B0Z3ljSXZ6S3hKYXRTZWl5N0xaSTgifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDEzOjAwOjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiJ9fQ.eZE1UAk5f0brx6pQKe3h3bOYKosbsIpirID2QV5gQpAqzPJ1eEp5hi6GZUgcWaYhFb5Qu7Ro7XpaZRqTSYB54Q",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "SIGNATURE_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "payload-not-canonical",
+      "category": "body",
+      "description": "Payload is valid JSON but not RFC 8785 canonical (keys unsorted), signed anyway: PAYLOAD_NOT_JCS_CANONICAL. Draft 5.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "5",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJzaWduZXJQdWJsaWNLZXkiOnsia3R5IjoiRUMiLCJ4IjoidnhTSW1DNHl3QkxKWFVmbHpRUmJnOVhlcTNDTm44X3FTRFQwNXdEazhGYyIsInkiOiI5VlRUQzgyaGw1bi1RR1E5a0owSlVWQUhna2FKNE9HQlZYMW43MmtwQ0pJIiwiY3J2IjoiUC0yNTYifSwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInRpbWVXaW5kb3ciOnsic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJlbmQiOiIyMDI2LTEwLTA5VDEzOjAwOjAwLjAwMFoifSwiYm91bmRhcmllcyI6Im5ldmVyIHNlbmQgZW1haWwgd2l0aG91dCBleHBsaWNpdCBjb25maXJtYXRpb24iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwiZGVsZWdhdGlvbklkIjoidHYtYm9keS0wMiJ9.R4tdJgjodIDS386s2GdizvLE017kG95wSFYDjQo0UTzPr45eRg0uThFg6cpX5HNCIBNpBDrm19RBDAOesABGcw",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "PAYLOAD_NOT_JCS_CANONICAL"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "payload-not-json",
+      "category": "body",
+      "description": "Payload segment is not JSON at all: PAYLOAD_NOT_JSON. Draft 6.2.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.2",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.dGhpcyBpcyBub3QganNvbiB7.DgMYy8UkQ1ZQpb3XRzP4OXTB-PxN8iGXaBt7ccIxrjVJwOUAWJgTOh8XMFU2P-oDpKp3CeRkcrw65RUvUXCUNg",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "PAYLOAD_NOT_JSON"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "missing-delegation-id",
+      "category": "body",
+      "description": "Required field delegationId absent: DELEGATION_ID_INVALID. Draft 4.2.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.2",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiMk84eUVydlBXQzhhSURJWnk1bTNpRjJ1MGFjU2lGVndvdnNDMG1VLVpLYyIsInkiOiJwOVZ4dnhESW1BcUROWWlfUDFFVHcyT0sxTWJiTzJvZjRVWVlNRmRlYlJvIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.IwYjFRqqtymd3gEHJuTaGZbzzsegrcaEdOqHWjG3-lDe9zFvrMIuF1Wik27RfhvfZH6UAjWQrKFzRIcG6KTTeA",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "DELEGATION_ID_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "bad-instructions-hash-format",
+      "category": "body",
+      "description": "instructionsHash is not 64 lowercase hex characters: INSTRUCTIONS_HASH_INVALID. Draft 4.2.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.2",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWJvZHktMDQiLCJpbnN0cnVjdGlvbnNIYXNoIjoibm90LWEtc2hhMjU2LWRpZ2VzdCIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6Iko4elJUTDFXbGlhcTVGVEdDbTR2bXdxc0ZQRVVBbk1LSkJoNURtYUxiMjQiLCJ5IjoiT0tCdERUMWVNX1lqV2tDa1NEWVBVMzZ3TFFpYXNJWmpGQ2VkYjdaMVAtdyJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19._aRB_dD2RJhK5GO4W1VWoC13zlcT5eoeBehAXFbmOfTU1KsdRZmlHJlRgdpCndh8ORzM08xNVCQPWjiBa98ELQ",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "INSTRUCTIONS_HASH_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "bad-time-window",
+      "category": "body",
+      "description": "timeWindow.end is not an ISO 8601 UTC timestamp: TIME_WINDOW_INVALID. Draft 4.2.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.2",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWJvZHktMDUiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6Im1qbXp5QTVEaFVFN3NQSlU3TnN5TUFPSXJnZWdkU2thWWlzWDVocV8tWU0iLCJ5IjoiTl94X1FRamphRG03bHlhUEdXQjFKdkdXempReFhQV1N1MTN5LUo5MndyZyJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6InNvbWV0aW1lLWxhdGVyIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.oFKkgtKf_GdMhM8Gjg-nnp0ZNgwAx1QswJL6cWLih3hsUNZmchgsRcDkTT5C4gJ5pEOBAmct2pglbZE9CprH6w",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "TIME_WINDOW_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "bad-signer-key",
+      "category": "body",
+      "description": "signerPublicKey carries crv P-384, mismatching the ES256 profile: SIGNER_PUBLIC_KEY_INVALID. Draft 4.2, 6.5.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.2",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWJvZHktMDYiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTM4NCIsImt0eSI6IkVDIiwieCI6ImVPMUpjb3lhNV9QajYzcElpOXZjQXppUFlNY09uZE5hM3E0WmEwREswZWMiLCJ5IjoiYzJZWUdTMEVuZjFkbVk2YnFZcDdVdTUyUmlzUTFkYTdJYUszc1ZwdmtYQSJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19.MhXGimpIeuaIFsj0E67PaA3qPZqnUjnCYfuokKYVcf8U0ZTQ3tBCD4-LF__vRw8tbLJie5Rew0xcmOE89090gw",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "SIGNER_PUBLIC_KEY_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "bad-scope-schema",
+      "category": "body",
+      "description": "scopeSchema.allowedActions is not an array: SCOPE_SCHEMA_INVALID. Draft 4.5.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.5",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWJvZHktMDciLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjoiZXZlcnl0aGluZyIsInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiSUkybDJYd1Z2cG9GamhSRkkyTzE0aDVmenlYQUIzZDk3MkplQzFIVWpYcyIsInkiOiJfOEt1MHFvUk8zb0pYdU1tT2tXVzdpMi1aYjlkdGxHYzdmMURzd1FFVVU4In0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.tYIPmePKLyJeMBvRJ50V6gJzL3IY0KUnOQaIfLW64okqfN8mPCIoOuAm4y-YLARBycV-XVlO05G-r0XRrYDv3w",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "SCOPE_SCHEMA_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "unknown-field-in-payload-rejected",
+      "category": "body",
+      "description": "INTEROP NOTE: payload carries an unknown field. Draft 4.1 tells signers to strip unknown fields before canonicalization and tells verifiers to ignore them; the reference verifier enforces the signer rule strictly and rejects the payload as non-canonical (PAYLOAD_NOT_JCS_CANONICAL) rather than ignoring the field. Independent implementations should decide which reading they follow and document it.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.1",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWJvZHktMDgiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IlVRbHhSOUVBRTBXcUZhakZRalhTaFc5Tmo5NFBvSE0yUE90Rk03eF8xeFEiLCJ5IjoieGlscFZRWXVEQUlBWUdDREU5OFdPX1hoWllPMFA4VHRySXcwYzN5U2lhdyJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn0sInZlbmRvck5vdGUiOiJoZWxsbyJ9.-gNvKFknMQ64qUrSeUBGSvNxvbFUY-4HQZVHMRN_2szttYUf3JR2-7cQIRe6jeCkKa0pcgjWM9XMW9LB130DDA",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "PAYLOAD_NOT_JCS_CANONICAL"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "compact-b64-false",
+      "category": "header",
+      "description": "Compact serialization carrying b64:false (the unencoded-payload option) is invalid outside the detached form: B64_FALSE_IN_COMPACT. Draft 6.3, 6.4.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.4",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0IiwiYjY0IjpmYWxzZX0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWhkci0wMSIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiMWdHV2E2VHFYbmVfSGxjNWdoTzd3NHRLdEJKRTI0V0dRZ2FqXzhPZXEtNCIsInkiOiJRLU9lVElianFBcHFQR0k5MjlHM2pkYWZLX0EycExRUFZYdXR4dWFXR25FIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.lY4mcZnEp9VcGBik5MTHdfU4hl_P-kmf-TnpQG1s87fx4dpnauodqJuHzlG6sowDIQiYV6OnujmOvmffgA-SkA",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "B64_FALSE_IN_COMPACT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "detached-header-invalid",
+      "category": "header",
+      "description": "Detached form whose protected header lacks b64:false with crit:[\"b64\"]: DETACHED_HEADER_INVALID. Draft 6.4.",
+      "profile": "jws-detached",
+      "mode": "receipt",
+      "draftSection": "6.4",
+      "input": {
+        "detached": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0..D2BtMVBHCMUKsb0wsmgtpP6c_iJCyLuaYhhb1uCJz_fTNs7E27A32agYRll1-Dno9GfeuWhpWYRKv6AfhsW0SQ",
+        "payload_b64": "eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWhkci0wMiIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiQXdNNkpKdGZaRzlKOEhIektrSHNBM25iUjRTczM2bU9uQU9QaGkwQ1oyUSIsInkiOiJlSTJkWmttS3BPT1F5SHRZOGRVQzAzdFZBb0FPMV9MN0hHTmx2dmU4cnowIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0="
+      },
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "DETACHED_HEADER_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "crit-unrecognized",
+      "category": "header",
+      "description": "Header \"crit\" lists a parameter this verifier does not understand: CRIT_UNRECOGNIZED. RFC 7515 4.1.11, draft 6.1.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "6.1",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0IiwiY3JpdCI6WyJ4LWN1c3RvbSJdfQ.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWhkci0wMyIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiU01WUVQ4RWlmWU5aVThXdml4VWFQZmhHVVlKLW05X01iQjRycmZIWjdIRSIsInkiOiJfN1lGdUx2aVFyZjhqREFrb0dMdjJ5N01NUndhN2tJM1AxZHRrT2dkWDVvIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.rPVfn04hWcpfY8a2mQRK3K1AwkOj4x5EYjnALSmo1OJakxMj8r1EOEx1bHlFrBW8HqUHVtcEKPUg5B_8Kd6igg",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CRIT_UNRECOGNIZED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "expired",
+      "category": "time",
+      "description": "Verification time (12:30Z) is after the window end (12:00Z): TIME_WINDOW. Draft 4.2, 10 (check 3).",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.2",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXRpbWUtMDEiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6Im1hdktuOEM0QmZqMDBGYzVJR3ZBenRoYkstOVhmQkJxZmhIYjB2SUxuVVEiLCJ5IjoiSmtMbjNnUG9kcWl1YTJwdlBQMkhpOEZyMTNVa204eEhQV3hfWm9UeWpnVSJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMDowMDowMC4wMDBaIn19.A-6BszHUQ6CMNsBqvayXTJVAbRbv1qydo7u2C7Ln_lKjIW6PwGCOZTmak7dgro_Fugv9sxdQjPqKrfVKlreSLg",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "TIME_WINDOW"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "not-yet-valid",
+      "category": "time",
+      "description": "Verification time (12:30Z) is before the window start (13:00Z): TIME_WINDOW. Draft 4.2, 10 (check 3).",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "4.2",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXRpbWUtMDIiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6ImJlRFk5aWpKZ0JoZENXYXdKY2Vid1dJZUdjUGRJNWlCSG9qQkN2MnNwOWsiLCJ5IjoiYmRpbmJacWpNQWlIekdRWHlXNEZ0OENCUWREMk14bzZjdG40MlJSdDhmayJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTQ6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIn19.3bxjGcAF9XHtpYdPDUV-YETY1J0ORyTw8wgAuxS6qbjyhzPJXdO3Ie6VJwXcYcQS4CpPSUP_SOEr9gUo8HqNfg",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "TIME_WINDOW"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "revocation-check-required",
+      "category": "revocation",
+      "description": "Receipt with revocationRequired:true and a registry check requested (checkRevocation=true): the reference implementation ships no registry (distribution out of scope, draft 14), so it fails closed with REVOCATION_CHECK_REQUIRED. Draft 9.4.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "9.4",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXJldi0wMSIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInJldm9jYXRpb25SZXF1aXJlZCI6dHJ1ZSwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJkVGRIYjVaT1RyWnpvS01xdFdHREFtRkxERVJXUjZsa2Z0c3hIWU94MDZNIiwieSI6Imppd2JYSVdzTVpBLVZQWnJMZjQyZC1ZcXEyMzQ4YlNzd3dReXNSWjBzZ28ifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDEzOjAwOjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiJ9fQ.nwIrGvX4Umcm5mN3rDNoSHnMHpDFTiBITtTSE0MYHw2tFiqo2jb8vt4v-0lp8G0TP7ME31xbkQ939Zg9_G8c6w",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": true
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "REVOCATION_CHECK_REQUIRED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "issuer-not-trusted",
+      "category": "policy",
+      "description": "Caller pins a trusted-issuer set that does not contain the receipt issuer thumbprint: ISSUER_NOT_TRUSTED. Draft 10.",
+      "profile": "jws-compact",
+      "mode": "receipt",
+      "draftSection": "10",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXBvbC0wMSIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiUjlaSnFKQWMwbDlId19sZXgxTTJtMUgzRWpqU01XQWJuLWgxQ1lEUm5yUSIsInkiOiJmcG40UDJSZF9UZjR4SlRaS01rd3F6Zk5EZlZYb18zMkIzNnlKNW9wUG9JIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.4tMT_E5PV8u6U1AA-Dzc2dK76BgOVz2x7q9OCpxfYcJS3FUc6mjwPTpNx1gflnnfEkMbjZmv_9FqAPbI7wm0Aw",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false,
+        "trustedIssuers": [
+          "not-the-issuer-thumbprint"
+        ]
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "ISSUER_NOT_TRUSTED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "input-not-jws",
+      "category": "input",
+      "description": "Input is not a three-segment JWS at all: detectFormat reports \"unknown\" and verifyReceipt denies with UNKNOWN_FORMAT.",
+      "profile": "n/a",
+      "mode": "receipt",
+      "draftSection": "6.3",
+      "input": "abc.def",
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "unknown",
+        "errors": [
+          "UNKNOWN_FORMAT"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-valid-2hop",
+      "category": "chain",
+      "description": "Valid 2-hop delegation chain: root signature, child signature, orchestratorSignature over the exact binding string \"orchestrator-delegation:<parentId>:<childId>\" verified against the parent key, child window contained in parent window, child scope a strict proper subset of the parent scope (2 < 3 allowed actions, parent denial preserved). Draft 4.4, 8.5, 8.7, 10 (check 14).",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "8.7",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiUXc1akxhNjczclQ1eGdRRzdBUGRPZHdnT1dLTVBRVF9jR3ROSENtWkhoOCIsInkiOiJUMzY4NTZjQlVieHlHUGk5V2ZpeERBVmVIbnU5d0w0cHRFM1RnaUhEendvIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.aa3recS08u0s4asghUWjOQWvdcYLYDZIxZB4J8cVniMcOWnT7-StS4srgwwmk9jGhlGsGvSPWvm17iaf86HONQ",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLWNoaWxkIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiYmNmNzJkMTZkNzQ4NjQ5MWYxMTIxZDhhZTk4NjVjMGFhMWQxODdlZmQ3OWRjYWI0YmY1YmY1ZTg2MmMxOWUzZSIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiUHZEY3RwcnptT05WTXlBYWxiYjVySk5IV1paVFRJeUFjOGRaNkVpZWIxOCIsInkiOiJKaUFqVDhsQTZ6WXpKTWZwZEtjeFFhVlNYcTF0SzJFNnJ2S2JMSm9nMjJzIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0NTowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjE1OjAwLjAwMFoifX0.GB0xkHqW4IdxudOi32jD1hdaSdTXlerzsO1fAVGiE_5CnwiUYILR-emJH7zW6KKNhHP8d2Ajx4-dkTJgH4UE0w",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246YmNmNzJkMTZkNzQ4NjQ5MWYxMTIxZDhhZTk4NjVjMGFhMWQxODdlZmQ3OWRjYWI0YmY1YmY1ZTg2MmMxOWUzZTpkNjU1MWI4ZTIwZDgxYjllY2U0YzFiMGIzNmQwMTY0MjgwYTI0MzQwNzg0MmY0YmM0MGRlNDY3YTkwODBkZmUz.MfvMSdOosCgRUrHGGB0uPliS_y6EYr2SDac3-X7fVhb9WDclnKWo1aCcZMnc1yIBggRlmxM9bdCRzMpdATN0yQ"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [
+          "CHAIN_OK",
+          "ORCHESTRATOR_SIG_OK"
+        ],
+        "receipt": {
+          "receiptId": "d6551b8e20d81b9ece4c1b0b36d0164280a243407842f4bc40de467a9080dfe3",
+          "parentId": "bcf72d16d7486491f1121d8ae9865c0aa1d187efd79dcab4bf5bf5e862c19e3e",
+          "scopeKind": "structured"
+        }
+      }
+    },
+    {
+      "id": "chain-valid-3hop",
+      "category": "chain",
+      "description": "Valid 3-hop chain (root at depth 0, leaf at depth 2, under the default maxDepth 3): every hop narrows scope and window, every orchestratorSignature verifies. Draft 8.6, 8.7.",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "8.6",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluMy1yb290IiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn0seyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2FyY2hpdmUifSx7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNvbnRhY3RzL2xpc3QifV0sImRlbmllZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn1dLCJ2ZXJzaW9uIjoiMS4wIn0sInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6Im5kXzJhcVhCbHBHbVBiVi10MWVUdVBJUEM3ZFRUU3lQYUUxVHpybHozZGsiLCJ5IjoiT1h6ZEpIUHlYVGJWZUQxajBhOU9GYXZkeXVheHZfWEpqcVNhQXZ5WEFnNCJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19.BZnDWy6sa6JxvUm9c6Wd0gOLCAdd9j42tLFola8n6tEV99kW3HQ47gGxnYmZnnyNiJxmEPtgsgDVVazZAvOntw",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluMy1taWQiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJwYXJlbnRSZWNlaXB0SWQiOiJmYjkwY2NiOGMwYTBhYmY1Yjk0ODY1M2M1NDViOTk5MzhmYTM5M2E1OTlmNWI0ZmVmNmI1MmY2MzU3NDAyZjQ0Iiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn0seyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2FyY2hpdmUifV0sImRlbmllZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn1dLCJ2ZXJzaW9uIjoiMS4wIn0sInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6Ik1NQUdIWGMzT25SU2piQ2p5SVJtZi1BeFd3NFFaQWtBR0FKQ0pZVzI3eWciLCJ5IjoiOVNkRGhRb2NiUjBnVWNVeFptdllNVHp4N0V4bHkxaU96QjFCaHlodkFRMCJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTI6NTA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjoxMDowMC4wMDBaIn19.DK7xXeQXT8vqK8C9C2C93PjU2jxfAOJ7nyB9h3L5GqvULEQ9iQvD9zXUAWgZaQ3j06A8zjLhC1MaRjUCZzUD5Q",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246ZmI5MGNjYjhjMGEwYWJmNWI5NDg2NTNjNTQ1Yjk5OTM4ZmEzOTNhNTk5ZjViNGZlZjZiNTJmNjM1NzQwMmY0NDo3YzUyMTI4YzY5YThlZTViOGVhY2IxYjE5ZDM4ZTRiNjM2ZDIxMGMzN2IwMWQyMjRmZDA5ZmJkMTE5OTE2YTA5.9wNHCGy3bil8bI3AAgBzVVAorGRNt8kVDfeTbjVNML2AAYy6Qp1zyuiIMdNXBN4oUvwPvJZFcW3BpiN5F3TEhw"
+        },
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluMy1sZWFmIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiN2M1MjEyOGM2OWE4ZWU1YjhlYWNiMWIxOWQzOGU0YjYzNmQyMTBjMzdiMDFkMjI0ZmQwOWZiZDExOTkxNmEwOSIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiWlRjUzZFbm8weVEtRGFNRHFDUEx0Vl9TZHZlTGhKRDlFSGZYSG9OSVBOZyIsInkiOiItNnI3MWN6b1E2Y2FZaVNGM0lNZ3k2d3UzamI3MEUxX1VkZ2VzYVBvNmRBIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0MDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjIwOjAwLjAwMFoifX0.wYqnmOm-P-D3rncBk-yVQiqMZt-VDGsiiiP9cMA5Ov9eyjphyR9sZlZzbV0OvfuvzS7JYBI_R6a64OayAupDiA",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246N2M1MjEyOGM2OWE4ZWU1YjhlYWNiMWIxOWQzOGU0YjYzNmQyMTBjMzdiMDFkMjI0ZmQwOWZiZDExOTkxNmEwOTo4YTI1MjA4ODAwZjkzMjY4NzUxYmUzYWY3OTA5ZjFhZTRhNGQxMjE3NzY4MTZmNmYwZjljMTBlN2FlNTgyOWYz.cec9SZF0NWtE2MVdtHt3fdgqgvaV_SHwPEfZRGkEGXLCVy_8Ub_9PnnECGCdwpGlJn1xq2RSTUq2bG-AMzjFbw"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [
+          "CHAIN_OK"
+        ],
+        "receipt": {
+          "receiptId": "8a25208800f93268751be3af7909f1ae4a4d121776816f6f0f9c10e7ae5829f3",
+          "parentId": "7c52128c69a8ee5b8eacb1b19d38e4b636d210c37b01d224fd09fbd119916a09",
+          "scopeKind": "structured"
+        }
+      }
+    },
+    {
+      "id": "chain-valid-2hop-detached-child",
+      "category": "chain",
+      "description": "Valid 2-hop chain where the child travels in detached form (RFC 7797): chain checks run identically, receiptId follows the section 6.6 compact-reconstruction rule. Draft 6.4, 6.6, 8.7.",
+      "profile": "jws-detached",
+      "mode": "chain",
+      "draftSection": "6.4",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiSDdVMnc1c29HRlZBNjVTRUxEZVFUUkhrWW0zZWw1b3Y3X0t3VWt0eUpUMCIsInkiOiJMdGRaaEVWb2FwM0tDTXMyRTEtbFJSZG9qR2E5WUtBSTFyeEoxelFURGw4In0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.fJ8AI3kE0CWFa2NKPdUTVA9o4jTPzAZ4k2t6xLEaN6cb7SZ0PQ4XCGM1CX1gFKTsNbAqD6Epr4q-nmrNs46Qsg",
+        {
+          "detached": "eyJhbGciOiJFUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..IaLfVqWRtjWXAdqy3OvEUFsNOOe63-diwsSzE7nsD5_773UaZ46od32_3i6q5x5DucaXiJt9BsU93oF-McxieQ",
+          "payload_b64": "eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLWNoaWxkIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiODZhMTYxYzkwZDQ2NjMyYjFmNWQ1ZDRhNjg4NmExMTllNWExN2Q2YzljYjdiMDkxODZjNjk1M2RiYWUzNmY4MyIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiWlMxTjV2V0VkWmpJZFpGOXJkUVdsZDVvQU9UZTdsXzNvTGpwZWcyd2k4YyIsInkiOiJsbkN1Z1J5U2p6SWJRd2lHMG9GMUQ2c05ZUWlUTnJPVm42M2JVUkJlZGY0In0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0NTowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjE1OjAwLjAwMFoifX0=",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246ODZhMTYxYzkwZDQ2NjMyYjFmNWQ1ZDRhNjg4NmExMTllNWExN2Q2YzljYjdiMDkxODZjNjk1M2RiYWUzNmY4MzoxNTE0NjE3NjA2MGRiZTRjYWRlMWIwODgyMjVmMzk5MzFhNzY0ZGUxMjQ3ZjZiNDVkM2U5MzUxNDk1ZjU2NzA3.Ngr1k-1eZgFq4CZ1MsmErnAlxnCDf_BfqlxHaCEKiXaOCwD3KM5_jVXIRahVkf7dSON5BqFzjK9k4DUg8X4RAQ"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": true,
+        "format": "authproof-jws",
+        "errors": [],
+        "warnings": [
+          "CHAIN_OK"
+        ],
+        "receipt": {
+          "parentId": "86a161c90d46632b1f5d5d4a6886a119e5a17d6c9cb7b09186c6953dbae36f83",
+          "scopeKind": "structured"
+        }
+      }
+    },
+    {
+      "id": "chain-attenuation-wider-scope",
+      "category": "chain",
+      "description": "Scope attenuation violation: the child grants delete::calendar/events, a key the parent never held (literal operation::resource comparison, wildcards not expanded): CHAIN_HOP_1_SCOPE_ATTENUATION_VIOLATED. Draft 8.5.",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "8.5",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiNTl2SEVJbVhHX3psem94SjRiZmVqbENQal9LSGlCOHZOLUJTSktpaFJjNCIsInkiOiI2aDA4QWRkc3BmbncxRUpwTXkxMzg2QjMxQUFiM19VcXE4VVlOYy1UdEI4In0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.VyW7r8JnxU069lfmOWYwQd0aanEOkDUH5rhwPYSUtX58Bl-TVdD54Y4VVGtbAGuxVZS5TMrOEckDQmBc_FbVZQ",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXdpZGUiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJwYXJlbnRSZWNlaXB0SWQiOiIzOTUxZGYwMTI2MjhhMGM2Mjg1ODZkNmUxZjQ1MGVkNjVjMTg1ZmFhNzE3NDQxODljYzhkN2ExODAzZWFjMjAzIiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn0seyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2FyY2hpdmUifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn1dLCJkZW5pZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9XSwidmVyc2lvbiI6IjEuMCJ9LCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJycE9sSFhnYVJYYkhFcVhERkR5cjB0TEViUl9nd3hrdzZYaDd3ckwwVlJZIiwieSI6Im9kcGZkcndWZ3lIa0lBS2hDQUdKM2g1QXU4VENqMEk2V1gxZFVfTlVJX2sifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDEyOjQ1OjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MTU6MDAuMDAwWiJ9fQ.b7FI4SqtTbW6VlDeYohUHtFS3W2vEPO0hBIiyOXEqpl0drmCp9oTZodCyEu8wDprsjjK-8AoCl3hlMno-D9fSQ",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246Mzk1MWRmMDEyNjI4YTBjNjI4NTg2ZDZlMWY0NTBlZDY1YzE4NWZhYTcxNzQ0MTg5Y2M4ZDdhMTgwM2VhYzIwMzpmMGJjM2FmOWIxZjhlZWNkMTZhZDc2OTE0NGExZWU2MTNmMGI0MGRhMDhhODUxZmFjNjE0MDYxYzI1YTNjMjA0.-XlpvkibBLKhC47csWWVJikF5s7JbSSkgBy71cYJsGy1UJf0MidQ0YxK6g9-GgscNcaN7qfJD8A1UK7EWmy9lg"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CHAIN_HOP_1_SCOPE_ATTENUATION_VIOLATED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-attenuation-equal-scope",
+      "category": "chain",
+      "description": "Scope attenuation violation: the child keeps the parent's full allowedActions set (equal scope is rejected; delegation MUST narrow): CHAIN_HOP_1_SCOPE_ATTENUATION_VIOLATED. Draft 8.5.",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "8.5",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiaVNpbkpZQXpmWGtPdTluZVVYSVIzaGdVdzZhY2hhUFhJT0ZvZDRKUDBtZyIsInkiOiJZeW1Jb3pfQ3U0X0dydWVFZ2p6d04tdjlSeFB3S3g0LVc2MC1OMnlaN19rIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.BbiYs2zTT_RiEGpsakTPBCZ4yNUqSCyZi-BIoMQf4Nx5kwMWqbsqp4MG9SRfSFVdsps2i9VIJBfVsY-a51sumg",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLWVxdWFsIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiNThkODdkNmRhOTM2NTdhMDllY2Y3ZGUxZTZiZWE1ZjRkYzFmY2FhOGE2YWYyNTUwOTNjYmY2NDcyZGJkNjRkNCIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9LHsib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9hcmNoaXZlIn1dLCJkZW5pZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9XSwidmVyc2lvbiI6IjEuMCJ9LCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJMYk45ZjBXdFJ3b1NQVnFXRF9YYXlTd1kxRFY1aDZaZmUzcXhGWl9RTy1rIiwieSI6IkdSQWI5VjViejJsZWV3MGphWEdTdmxyak8xM19COXE2a19IZnNCM21XRk0ifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDEyOjQ1OjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MTU6MDAuMDAwWiJ9fQ.ZabJv5kT6lFwb8kjRVLW5az8KpYnGqMGWEQt-tCQY1tODytnsqJo5_1dgF4i7LO_W-IFyzfaP8PUXXtyRm4jQw",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246NThkODdkNmRhOTM2NTdhMDllY2Y3ZGUxZTZiZWE1ZjRkYzFmY2FhOGE2YWYyNTUwOTNjYmY2NDcyZGJkNjRkNDplM2JhZTBjMjBjZTNhZDZhYWMwNGYyZmY5OWZhN2JmM2ZkZWJlZTQ0MTA3ZDIxM2NjOGEzODkzMzg2NTY3Y2Rj.N9JuGkLmGR298RiASUz2XNEW2S-l67vL4dIQCRWape4yEEVC60y1xRCpEsVkzGIv-_y4Lx4raWkLpjVEw96yWg"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CHAIN_HOP_1_SCOPE_ATTENUATION_VIOLATED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-attenuation-dropped-denial",
+      "category": "chain",
+      "description": "Scope attenuation violation: the child narrows allowedActions but drops the parent's deniedActions entry (delete::calendar/events): CHAIN_HOP_1_SCOPE_ATTENUATION_VIOLATED. Draft 8.5.",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "8.5",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiRE1qamhnenJkajB1a01xcEhtd2ozN2NlcEhETjFxc21WMWdkNDUwQjZhRSIsInkiOiJOc0dXNTcyRVFQejRhOVZ4RS1PQ2M3MFlCMVZtLW00SWt0UmVuU1BNS1ZBIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.VTSUldK6s6aYjVy6LL8cFhINDlRnCgQLr2HEnh1uWadFcvn4Q91B81Ee3P9iQAEvnOm9QaSErJiWZjzrP61nSw",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLWRyb3BkZW55IiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiNmZkN2ZhNzFhNGZmNzkzNTBkYWI2YTI5YTcxM2M4Y2RiYjdiMjdiNjgxZWY1OGY2MzNjMzEzYzVjMTZiYjgyOSIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W10sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiNW1zRExkeGJUQUJNXy1oQm9ZN0dpR3VsbGcxUm9JMnFVWUxpVmhXOVEyQSIsInkiOiJhVVJ5TjFCcXBwNXk5dUU4bF8xTFkzbmd5STJGZUs4LVRVY0ZhLW5jZzE4In0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0NTowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjE1OjAwLjAwMFoifX0.BMyMQXP4hdRi5-A6SzQTTwUC5JBvAw6lX9A_KQEI7DqPSDZ5Dqw9SupMYTYL7tqkvvu9OEnd6ThSPuGvDniLiA",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246NmZkN2ZhNzFhNGZmNzkzNTBkYWI2YTI5YTcxM2M4Y2RiYjdiMjdiNjgxZWY1OGY2MzNjMzEzYzVjMTZiYjgyOTpjODhkOGFjMDhhZWQ5ODNlMTJkNDA0NGZmN2VkMjM5YjQ0ODAyN2UxYmY5ZTY4MThjY2VjMjZmMGY3ZmZiNzI5.pNvTbso_Yc_vAKyxVNvhilpMk2ltOuH7--2muwxzPA16_A3v8cfbYBLVw9Y0F1xfHk9v_EIf53iO8gKw34Btsw"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CHAIN_HOP_1_SCOPE_ATTENUATION_VIOLATED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-window-violation",
+      "category": "chain",
+      "description": "Child timeWindow (ending 14:00Z) is not contained in the parent window (ending 13:00Z): CHAIN_HOP_1_WINDOW_CONTAINMENT_VIOLATED. Draft 4.2, 8.7.",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "4.2",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiNDhsZEZFcm54bkNhQklNeGd6TVhJZDlGUU8xOUVSRTVDU2h1UzhrNVVaQSIsInkiOiJZeFV2d0tpeEZJUWlTaGxqMGRna0RzTE9oMVhHQU9aT3V2Q0FybHVFNktZIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.YCDuYfcTrSXMn5HV319SNtN-cGTBd5dGPlUkxvqdPMnoxrEgOICwl74k6zfQYCuuVNl87MfAR4O4BbiOMYoeKg",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLWxhdGUiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJwYXJlbnRSZWNlaXB0SWQiOiJlNjdiM2QyZjYxOWVmZWQyOTVkMzcxNjc4YjU2OTkyNTE1MmJkNDczYjg3YTUwMjg2MGVlM2M2NzQ3OTcxNTI4Iiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn1dLCJkZW5pZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9XSwidmVyc2lvbiI6IjEuMCJ9LCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJzNjFYVUM4aE9Cb294bWZpZGIwM01ORnBOcjF3dVpHQjRUb2p1TDZ4cUlvIiwieSI6InFFYzNia1haZ3hVTGdaWWxmbXJNa2VkS2dtZExIUm1palAxRXV4ZC1FbncifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDE0OjAwOjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MTU6MDAuMDAwWiJ9fQ._NoRKB6UV4hKP8dUwI6lCqPUMH-raT04y8vkOFFKfiOoChDO1cmXivSAv8dF_nl_1CGx7nwrFhYckC4Occe-ZQ",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246ZTY3YjNkMmY2MTllZmVkMjk1ZDM3MTY3OGI1Njk5MjUxNTJiZDQ3M2I4N2E1MDI4NjBlZTNjNjc0Nzk3MTUyODpjNTA2NzE0NjhlYWE0Yjc4MjgzZWE1NmNkZWY4NWJiNWVhZjU4NWVkY2QwOGRmNTQ0MWVlNzhmMmM3ZTYzOTgy.BoQiXVlvARxLCTxTnB9_hEMxA7yc5HnEpCmipPhIa1Cv4QfNCzIE-6tDuzt92iQNU-CeJ9C09gLV7JKdAvCvuA"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CHAIN_HOP_1_WINDOW_CONTAINMENT_VIOLATED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-parent-link-mismatch",
+      "category": "chain",
+      "description": "Child parentReceiptId does not match the presented parent's receiptId: CHAIN_HOP_1_PARENT_LINK_MISMATCH (and the orchestrator binding consequently fails: CHAIN_HOP_1_ORCHESTRATOR_SIG_INVALID). Draft 8.7.",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "8.7",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiQVI2SVp1S19Nd19lQko0UjcxMS1oeERKd1pIWWc0TTFkZDlrWVJlUTRVNCIsInkiOiIza0EyTWc2ZFFPcnFoSlU2NFF0bEp2QjAxdngzdWppejFzYjd5bVl0dWwwIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.ga_eXVY8p2p64jVUve7AueGefqHaCuy-zhBRP1H4u7LXEbE0S00ohFU8juAwbHbcLEOCal1RLYOfjXlaEB1oUQ",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLW1pc2xpbmsiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJwYXJlbnRSZWNlaXB0SWQiOiJmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmIiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn1dLCJkZW5pZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9XSwidmVyc2lvbiI6IjEuMCJ9LCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJYa09sbFRURl9kbnNocXZHMUZ2dGdBOHFlNE96akhJN0R5dzRVMlpzeFZNIiwieSI6IjJWU25kR0xzaXcyclhRcUNyaS1QUXBSOTdSclA0Y2REQll0c0x3WmNSa2cifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDEyOjQ1OjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MTU6MDAuMDAwWiJ9fQ.RBqcHqIwSe5lRCBg2LiEXa0CEEYItt8KZwx3UrE35ENL1E0hnekUENn0OXVQayhopKcJ_fdIT7XUMFPt9T-xUw",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246ZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZjoyOWJhMTI5NmIwNzM0YmYzNWQyZjNkZmI2ZGYwZDQ2M2RmNDQ2MDlmYTk5YjA4NzdmMmZjZjNjMDM3NTk4MGQ3.YaegBuoNLVPTGgsrGMuEKslg1v9EbfKZ7cNTMiTjjvE--cYk2rP3rfjzdLL5KU4XHIee2FPl-nAyGJiyx-5vGg"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CHAIN_HOP_1_PARENT_LINK_MISMATCH",
+          "CHAIN_HOP_1_ORCHESTRATOR_SIG_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-orchestrator-sig-missing",
+      "category": "chain",
+      "description": "Sub-receipt presented without its attached orchestratorSignature: CHAIN_HOP_1_ORCHESTRATOR_SIG_MISSING. Draft 4.4, 8.7.",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "4.4",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoibDhlY3ZpYUo3bUxTZnJzTmVadzJSVGJSN04zSUFHbm9ydHpybUhNTnA0NCIsInkiOiI4VEN3TXNqWnlJdFdtbmcyX054YmdqTzJpWVllLThOTmJPLVpKRkdKV3JjIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.GGNZb1PnuHGJUTD80Fvo_vZ3J-l3qIAvElj2IdwBv6N0uw9x1BGgraRTaCgl4U-Wgm8bNDc_b7yNqy5eAeDHPw",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLWNoaWxkIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiZTJkZDYyOGZhYWVmNTNhMjJlMDhhM2RjMmUzNjYxY2ExMmVhZDRjZWVlYTllMmNkMjk3ZjhjNzA1YjM3MDRkMSIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiamtzMk4tdm1fSEI1WFRLVkppcThHUjdZdWVocGZKUklQNzRZZU1md2cxQSIsInkiOiIxb2dRdEp0YllrRWdudUhtb2RGVmxqVkp4TWszVDl0YUwtUlZSOWZyZURzIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0NTowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjE1OjAwLjAwMFoifX0.e9Dl0fHKQc06UH1H6T90LaiR7sRN-oDX1pjobFf9Nj0PJb0kTZ7OtUM__XdYrIyw_BOD4MblZSQjSF41y3abfQ"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CHAIN_HOP_1_ORCHESTRATOR_SIG_MISSING"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-orchestrator-sig-forged",
+      "category": "chain",
+      "description": "orchestratorSignature over the correct binding string but signed by an attacker key instead of the parent key: CHAIN_HOP_1_ORCHESTRATOR_SIG_INVALID. Draft 4.4.",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "4.4",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiaFhFSUdaRmhFVUg1NWZPSkhjZ1RJQ0JzWkhHOVhRYnpfX2NPUU5mdDgwRSIsInkiOiJrZ3R0NTRVZU9fQ2xDMEdWMFlkeTZvMXJ1RnJfaGFxZFpBZkhSSl9LMWhZIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.TwC1CXn_a1qBjcYvHVZL3rWO_4VqLt94GeGhB5QJSw2kpEZJwji69s0nD70zUPKftQUHHurw8HpYQvcas2RF2w",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLWNoaWxkIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiZjQ3MjE0YWYyODA5MWIyMGJkNTQ3MjA1YmIwZDUzYTY4MjQ2NGRmNDIwNTA5ZGIzYWY2MmIzODQxZDQ5OGViMCIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiQUNKa2l6eVZGbjlDWGRuSEFuS09DajlVWk9Oa3ZGWnVQSWJ2ajZIN2p1WSIsInkiOiJvTDBtcVdqMGRQbEVHZ2JsaDRqN09IbmR0UTE0U0hMYkNLbnlWVzJWYTBvIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0NTowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjE1OjAwLjAwMFoifX0._pK42psbnppbjRyyvf-bQ8M9le8S4Q3gEN2QxnN8tMWORE-y4Mi6NiE_W6E1SeB63NU3OOrsMnyB2w2sWDKchQ",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246ZjQ3MjE0YWYyODA5MWIyMGJkNTQ3MjA1YmIwZDUzYTY4MjQ2NGRmNDIwNTA5ZGIzYWY2MmIzODQxZDQ5OGViMDpjNDA3MTZmYTBmMzViYjE3ZTQ1YWEwYWFiMGY2MGE5Mzc3MDQ3NTFiODMzMWY4MGQ5Y2JiMzQyNDdmYWIzY2Y5.ot-5q25GuBG4Kt5tZECYQ9DzeU-QcC9fEUe0aCihFBWOYHXcctJieG9ED2Y2Nf1pirlcTEZhvpZsTS9_0jUGig"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CHAIN_HOP_1_ORCHESTRATOR_SIG_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-depth-exceeded",
+      "category": "chain",
+      "description": "Valid 3-hop chain presented with maxChainDepth=2: the leaf sits at depth 2, which is rejected: CHAIN_HOP_2_CHAIN_DEPTH_EXCEEDED. Draft 8.6.",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "8.6",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluRC1yb290IiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn0seyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2FyY2hpdmUifV0sImRlbmllZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn1dLCJ2ZXJzaW9uIjoiMS4wIn0sInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IkZtTUIzNmhyMVJpREM0QU8welA3dlFRdXlMdnFTSjBzQzFwclJzaENBZFEiLCJ5Ijoiczd4RUdEOWZvRXVTVmVBVldXY05NSmlsaVBOUHVuTlNZb2xPbUlHRDBhdyJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19.d2cg3qAXFDDcdM1N30MMePGNVBUG06IaaIb79TMC0en9Ay5lzAgRd7QSYK0u6b4A0bP3hz2Izvelf_MDbCk6ug",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluRC1taWQiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJwYXJlbnRSZWNlaXB0SWQiOiI4ZWVhNDFhMzUzYTc5ZWQ5MmQyNzVmZDI4MTk1MGJlNDFjYjliMmRhNmRlYzFjMTU2ODYxMjM4NWE5MzY4OWNmIiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn1dLCJkZW5pZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9XSwidmVyc2lvbiI6IjEuMCJ9LCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJES2dJQllMQ3QxbnFWQmtpVER0aDFKV2l0YklRVHA0X0tUeWpwdUJPcHhNIiwieSI6IjNtTFRTRVd5SUdGdG0xWVlCOG5SbW5QT1JOSUdTUGRPRFJIRnB0Q29kdUkifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDEyOjUwOjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MTA6MDAuMDAwWiJ9fQ.8kdebBmrPDA2Td0050LO4tFfL0MKuhnTn45ndiHXVlt50_eCIvf-QELtfcDpyrYtPUVwkbReqMFqJM9bQiPlxg",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246OGVlYTQxYTM1M2E3OWVkOTJkMjc1ZmQyODE5NTBiZTQxY2I5YjJkYTZkZWMxYzE1Njg2MTIzODVhOTM2ODljZjo3NmUyOGVkMDAyNzJiMmMyYmQ2MDE0NDI2MjY0YzRmYTZjYjRhZTQ2NzJlNWJiN2JjMDYwNDU1OWVjYjFkNmU0.37FG-FtX6-e3DOEQre9pncv1h2tooeTdYA5vbcV1xPjPAtosxXy80EYdgJRcwavLcTHaNBIlTMqzPevEvbbI5w"
+        },
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluRC1sZWFmIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiNzZlMjhlZDAwMjcyYjJjMmJkNjAxNDQyNjI2NGM0ZmE2Y2I0YWU0NjcyZTViYjdiYzA2MDQ1NTllY2IxZDZlNCIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiRXlURFFUSHNvX2ZjWF8xazdEVkliR28yMWtUb3VEY0pvWktPU3lNZGNuZyIsInkiOiJLM0MzNkhPSGFVa2tzWTVGdHAzdXJza2E1eHFPd0Y1UnBRSDZPa0dOdmNFIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0MDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjIwOjAwLjAwMFoifX0.sqcxqIRwexBY-51f4lW2BbyQepp5ES2OJgobcXsgvBgnCEaQleEqGlhFd6682sFrO-jo6lgl9uIcT097_gNw_A",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246NzZlMjhlZDAwMjcyYjJjMmJkNjAxNDQyNjI2NGM0ZmE2Y2I0YWU0NjcyZTViYjdiYzA2MDQ1NTllY2IxZDZlNDo2MDlhZDhlYTdlOGUyNjk5ZjJjMTUwZWJjYWIwM2Q4MGU2OWFiODljOGVkZDBjZTNjZTI0MTEyMmFmNjNmOTA3.YW_CwkdFT4cGYb4nov9mAwQUApGxzMayxOSyVvyuEYx_XK1RG3DfpPxD1uKNa1KocecVcIZnUxQffLaUrHfCkw"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false,
+        "maxChainDepth": 2
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CHAIN_HOP_2_CHAIN_DEPTH_EXCEEDED"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-hop-invalid-signature",
+      "category": "chain",
+      "description": "Child hop carries a signature from the wrong key: the hop fails individual verification and the chain reports CHAIN_HOP_1_INVALID. Draft 8.7, 10 (check 14).",
+      "profile": "jws-compact",
+      "mode": "chain",
+      "draftSection": "8.7",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiUWZCUWNSR2NVS1dDQlhJVDlNcm1MS3VlcGQyMUhjLTlfT19GYUhZR3hyZyIsInkiOiJtOFc5UF9mZGdWdHdSUmh6bHgyRl9fdnAtSnhMeHNoMDhLMkNOa2FNQzlzIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.mvvRYEAy-Dser1mtOq4sC6_AVzVjMqXrS-gPZR0cy1RiMmU4o-eV-O9LUbicHjwsy3TPfliqRTa-w6ZDxNZj3Q",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLWNoaWxkIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiMjA1YzY5MTNhNDg5YTIxNDMyZmEzODFjN2U2M2Y3YTgzMjQ5Y2NhZWY2ZTZhOWI0Y2UxOWZiMGI3OGMwMmQxZSIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiOFh3b2R1b2kzYkFIU00wY2U3anNmQzhCNnFUYXkxV2NJdVZZWGtzMUJiNCIsInkiOiJfR0dWMm1rYVEzSWhib2laY01VOHhrdXZWVmtMMmNzeVlLZDlnUlFTRzhJIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0NTowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjE1OjAwLjAwMFoifX0.LjigcqV53BCaPCbxjopC_Q1Q68futftYJDFqfpkb2QB7JZAZ_Y8nh9wV9Z3SbbDnhWmIbwyYY7F2hxGQ3PVUqA",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246MjA1YzY5MTNhNDg5YTIxNDMyZmEzODFjN2U2M2Y3YTgzMjQ5Y2NhZWY2ZTZhOWI0Y2UxOWZiMGI3OGMwMmQxZTozMTFmZGQ4ODI2ODY5YWM2MDNjNDYyMjA3MjAyOThhZGQ2NWVmODZiZGVmOTliZjUyMWYxMTgzNDRjZTBmZDY4.GC58oiP4E59hL3wiD_zMRHHicFx_QmosBwThIkMTZD3jG19qOO5SZmw_x0Z2a7EPLSAItxIZP_OVpKVPwtCOLw"
+        }
+      ],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "authproof-jws",
+        "errors": [
+          "CHAIN_HOP_1_INVALID"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "chain-empty",
+      "category": "chain",
+      "description": "verifyChain called with an empty input list: EMPTY_CHAIN.",
+      "profile": "n/a",
+      "mode": "chain",
+      "draftSection": "8.7",
+      "chain": [],
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "expect": {
+        "valid": false,
+        "format": "unknown",
+        "errors": [
+          "EMPTY_CHAIN"
+        ],
+        "warnings": []
+      }
+    }
+  ]
+}

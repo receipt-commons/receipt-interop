@@ -730,24 +730,29 @@ function verifySync(input: unknown, opts: VerifyOptions): Verdict {
           );
           continue;
         }
-        // A validly signed revocation record is revocation evidence the
-        // verifier consulted — even when it names a delegation outside this
-        // chain (proof the caller has a live revocation feed).
-        evidenceSeen = true;
         const target = delegations.find((d) => d.delegationId === targetId);
         if (!target) {
+          // A revocation for a delegation outside this chain says nothing
+          // about this chain's revocation state: it must not move the
+          // status away from 'unknown'.
           warnings.push(
             `${AGENT_PASSPORT_WARNINGS.BAD_REVOCATION_SIGNATURE}: revocation for unknown delegation ${JSON.stringify(targetId)} ignored`
           );
           continue;
         }
         // Only the delegation's creator can revoke it (SPEC-v1.1 section 2.3).
+        // A record signed by anyone else is not revocation evidence for
+        // this chain: it must not move the status away from 'unknown'.
         if (revoker.toLowerCase() !== target.delegatedBy.toLowerCase()) {
           warnings.push(
             `${AGENT_PASSPORT_WARNINGS.BAD_REVOCATION_SIGNATURE}: revocation for ${targetId} not signed by the delegating key; ignored`
           );
           continue;
         }
+        // Genuine revocation evidence for this chain: it names a delegation
+        // in the chain AND is signed by that delegation's delegator key.
+        // Only such a record may move the status away from 'unknown'.
+        evidenceSeen = true;
         // cascade: the target and all descendants die (SPEC-v1.1 section 2.3)
         const stack = [targetId];
         while (stack.length > 0) {

@@ -296,18 +296,19 @@ describe("verify() — valid receipts", () => {
     assert.equal(v.receipt?.notAfter, child["expiresAt"]);
   });
 
-  it("honors supplied revocation evidence (clean chain => active)", async () => {
+  it("keeps revocation unknown when the only evidence names another delegation", async () => {
+    // Regression (issue #216 finding #3): a validly signed revocation for an
+    // UNRELATED delegation must not move the status away from 'unknown'.
     const principal = keypair();
     const agent = keypair();
-    const other = keypair();
+    const stranger = keypair();
     const delegation = mintDelegation({
       delegatedTo: agent.pub,
       delegatedBy: principal.pub,
       scope: ["read"],
       signerPriv: principal.priv,
     });
-    // a revocation for a DIFFERENT delegation, validly signed: evidence present, chain clean
-    const rv = mintRevocation("del_someone_else", principal.pub, principal.priv);
+    const rv = mintRevocation("del_someone_else", stranger.pub, stranger.priv);
     const receipt = mintReceipt({
       agentId: "agent-a",
       delegationId: delegation["delegationId"] as string,
@@ -315,14 +316,47 @@ describe("verify() — valid receipts", () => {
       delegationChain: [principal.pub, agent.pub],
       signerPriv: agent.priv,
     });
-    void other;
     const v = await agentPassport.verify(
       { receipt, delegations: [delegation], revocations: [rv] },
       {}
     );
     assert.equal(v.valid, true);
-    assert.equal(v.receipt?.revocation.status, "active");
-    assert.ok(!v.warnings.some((w) => w.includes("REVOCATION_UNCHECKED_OFFLINE")));
+    assert.equal(v.receipt?.revocation.status, "unknown");
+    assert.ok(v.warnings.some((w) => w.includes("REVOCATION_UNCHECKED_OFFLINE")));
+  });
+
+  it("keeps revocation unknown when the revocation is not signed by the delegator", async () => {
+    // Regression (issue #216 finding #3): a revocation naming the chain's
+    // delegation but signed by a NON-delegator key must not move the status
+    // away from 'unknown'.
+    const principal = keypair();
+    const agent = keypair();
+    const stranger = keypair();
+    const delegation = mintDelegation({
+      delegatedTo: agent.pub,
+      delegatedBy: principal.pub,
+      scope: ["read"],
+      signerPriv: principal.priv,
+    });
+    const rv = mintRevocation(
+      delegation["delegationId"] as string,
+      stranger.pub,
+      stranger.priv
+    );
+    const receipt = mintReceipt({
+      agentId: "agent-a",
+      delegationId: delegation["delegationId"] as string,
+      action: { type: "read", target: "db", scope_used: "read" },
+      delegationChain: [principal.pub, agent.pub],
+      signerPriv: agent.priv,
+    });
+    const v = await agentPassport.verify(
+      { receipt, delegations: [delegation], revocations: [rv] },
+      {}
+    );
+    assert.equal(v.valid, true);
+    assert.equal(v.receipt?.revocation.status, "unknown");
+    assert.ok(v.warnings.some((w) => w.includes("REVOCATION_UNCHECKED_OFFLINE")));
   });
 });
 

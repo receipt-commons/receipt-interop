@@ -1,7 +1,7 @@
-# JWS Conformance Vector Suite — draft-nelson-agent-delegation-receipts-11
+# JWS Conformance Vector Suite — draft-nelson-agent-delegation-receipts-12
 
 Language-agnostic test vectors for the **JWS receipt profile** (draft sections 4, 5, 6, 8, 9)
-of `draft-nelson-agent-delegation-receipts-11`. Future independent implementers run this suite
+of `draft-nelson-agent-delegation-receipts-12`. Future independent implementers run this suite
 against their own verifier to check conformance. The COSE profile (section 7) is out of scope
 for this suite — the reference implementation does not implement it.
 
@@ -13,7 +13,7 @@ and never published. These keys MUST NOT be used for anything real.
 
 | File | Purpose |
 |---|---|
-| `vectors.json` | The suite. 42 vectors, each fully self-describing. |
+| `vectors.json` | The suite. 45 vectors, each fully self-describing. |
 | `run-vectors.mjs` | Reference runner: loads `vectors.json`, feeds each vector through the reference implementation (`../src` via tsx), asserts the expected outcome. Exit 0 = all green. |
 | `generate-vectors.mjs` | The minter. Regenerates `vectors.json` from scratch using the library's own crypto. Run: `npx tsx test-vectors/generate-vectors.mjs`. |
 | `README.md` | This file. |
@@ -26,7 +26,7 @@ From `source/receipt-interop/`:
 npx tsx test-vectors/run-vectors.mjs
 ```
 
-Expected output ends with `42/42 vectors passed` and exit code 0.
+Expected output ends with `45/45 vectors passed` and exit code 0.
 
 ## Vector format spec
 
@@ -34,7 +34,7 @@ Top-level `vectors.json`:
 
 ```json
 {
-  "suite": "draft-nelson-agent-delegation-receipts-11 JWS conformance vectors",
+  "suite": "draft-nelson-agent-delegation-receipts-12 JWS conformance vectors",
   "version": "1.0.0",
   "generated": "<ISO 8601 timestamp>",
   "keyMaterial": "THROWAWAY KEYS ONLY …",
@@ -80,7 +80,7 @@ Each vector:
 3. Assert: `valid` matches; each expected error/warning code is a substring of one actual error/warning; each `receipt` spot-check equals.
 4. Normative weight: `valid` and the `receipt` spot-checks (`receiptId`, `issuer`, `scopeKind`, `parentId`) are the conformance-critical assertions. Error **codes** are informative — the reference implementation's codes are not normative, but the deny/permit decision is.
 
-## Coverage (42 vectors)
+## Coverage (45 vectors)
 
 | Category | Count | What's covered |
 |---|---|---|

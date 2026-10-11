@@ -16,7 +16,7 @@ Gleipnir mandate support exists as an experimental skeleton and is not wired up.
 
 ## Quickstart
 
-The package is not published to npm yet. To work from this repo:
+The package is published to npm as `receipt-interop`. To work from this repo:
 
 ```bash
 cd source/receipt-interop

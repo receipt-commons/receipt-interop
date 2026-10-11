@@ -161,3 +161,20 @@ candidate for the draft's -12 unknown-fields/depth-default notes).
 - `npm test`: 116/116 pass. `npm run build`: clean.
 - This report: `test-vectors/agent-passport-vectors-report.md`.
 - Not committed, not pushed, nothing posted to GitHub.
+
+## Addendum — 2026-10-11: finding #1 resolved
+
+The maintainer replied on issue #216 (2026-10-11) confirming the adapter
+should accept both member-name spellings: camelCase is what the TypeScript
+SDK emits, snake_case is in the specification. Per that reply, the adapter
+now accepts either complete convention per signed object
+(`AP_MIXED_NAMING` on mixed spellings within one object,
+`AP_DUPLICATE_ALIAS` on duplicate aliases even when one is null), verifies
+signatures over the canonical preimage with the original member names
+before any normalization, and records the observed convention in the
+normalized `lossy[]` list. The 9 camelCase receipt vectors from §1/L1 now
+parse; re-spelling without re-signing still fails `AP_BAD_SIGNATURE`, as
+their vector suite documents. Unit tests: 128/128 (8 new naming tests).
+The maxDepth default distinction (adapter's local ceiling of 1 vs their
+reference no-ceiling reading of §4.1) is kept as a documented local
+acceptance policy per the maintainer's reply.

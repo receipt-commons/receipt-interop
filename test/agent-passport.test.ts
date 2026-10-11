@@ -741,3 +741,254 @@ describe("normalize()", () => {
     assert.throws(() => agentPassport.normalize({ nope: 1 }), /AP_UNKNOWN_FORMAT/);
   });
 });
+
+// ---------------------------------------------------------------------------
+// Dual member-name spelling (issue #216, maintainer-confirmed 2026-10-11)
+//
+// The reference TypeScript SDK emits camelCase; the spec documents snake_case.
+// The adapter accepts either complete convention per signed object, verifies
+// signatures over the original member names, and rejects mixed spellings and
+// duplicate aliases.
+// ---------------------------------------------------------------------------
+
+describe("dual member-name spelling (issue #216)", () => {
+  /** Mint a receipt in the SDK's camelCase spelling. */
+  function mintReceiptCamel(o: ReceiptOpts): Record<string, unknown> {
+    const unsigned: Record<string, unknown> = {
+      receiptId: o.receiptId ?? "rcpt_test_" + Math.random().toString(36).slice(2, 10),
+      version: "1.1",
+      timestamp: o.timestamp ?? iso(NOW - 60_000),
+      agentId: o.agentId,
+      delegationId: o.delegationId,
+      action: o.action,
+      result: o.result ?? { status: "success", summary: "ok" },
+      delegationChain: o.delegationChain,
+    };
+    return { ...unsigned, signature: edSign(unsigned, o.signerPriv) };
+  }
+
+  /** Mint a delegation in the spec's snake_case spelling. */
+  function mintDelegationSnake(o: DelegationOpts): Record<string, unknown> {
+    const unsigned: Record<string, unknown> = {
+      delegation_id: o.delegationId ?? "del_test_" + Math.random().toString(36).slice(2, 10),
+      delegated_to: o.delegatedTo,
+      delegated_by: o.delegatedBy,
+      scope: o.scope,
+      expires_at: o.expiresAt ?? iso(NOW + 24 * 3600_000),
+      spend_limit: o.spendLimit,
+      spent_amount: o.spentAmount ?? 0,
+      spend_limit_unit: o.spendLimitUnit,
+      max_depth: o.maxDepth,
+      current_depth: o.currentDepth ?? 0,
+      created_at: iso(NOW - 3600_000),
+      not_before: o.notBefore,
+    };
+    return { ...unsigned, signature: edSign(unsigned, o.signerPriv) };
+  }
+
+  function mintRevocationCamel(
+    delegationId: string,
+    revokedBy: string,
+    revokerPriv: string
+  ): Record<string, unknown> {
+    const unsigned: Record<string, unknown> = {
+      revocationId: "rev_test_" + Math.random().toString(36).slice(2, 8),
+      delegationId,
+      revokedBy,
+      revokedAt: iso(NOW - 1000),
+      reason: "agent_compromised",
+    };
+    return { ...unsigned, signature: edSign(unsigned, revokerPriv) };
+  }
+
+  it("verifies a camelCase receipt (the SDK spelling)", async () => {
+    const { principal, agent, delegation } = basicSetup();
+    const receipt = mintReceiptCamel({
+      agentId: "agent-a",
+      delegationId: delegation["delegationId"] as string,
+      action: { type: "api_call", target: "booking.example.com", scopeUsed: "book_flights" },
+      delegationChain: [principal.pub, agent.pub],
+      signerPriv: agent.priv,
+    });
+    assert.equal(agentPassport.detect(receipt), true);
+    const v = await agentPassport.verify({ receipt, delegations: [delegation] });
+    assert.equal(v.valid, true);
+    assert.equal(v.receipt!.receiptId, receipt["receiptId"]);
+    assert.deepEqual(v.receipt!.scope.actions, ["book_flights"]);
+    // The observed convention is recorded.
+    assert.ok(
+      v.receipt!.lossy.some((l) => l.includes("receipt=camelCase")),
+      "lossy should record receipt=camelCase"
+    );
+  });
+
+  it("verifies a snake_case delegation", async () => {
+    const principal = keypair();
+    const agent = keypair();
+    const delegation = mintDelegationSnake({
+      delegatedTo: agent.pub,
+      delegatedBy: principal.pub,
+      scope: ["book_flights"],
+      maxDepth: 2,
+      currentDepth: 0,
+      signerPriv: principal.priv,
+    });
+    const receipt = mintReceipt({
+      agentId: "agent-a",
+      delegationId: delegation["delegation_id"] as string,
+      action: { type: "t", target: "x", scope_used: "book_flights" },
+      delegationChain: [principal.pub, agent.pub],
+      signerPriv: agent.priv,
+    });
+    const v = await agentPassport.verify({ receipt, delegations: [delegation] });
+    assert.equal(v.valid, true);
+    assert.ok(
+      v.receipt!.lossy.some((l) => l.includes("delegations[0]=snake_case")),
+      "lossy should record delegations[0]=snake_case"
+    );
+  });
+
+  it("verifies a camelCase revocation", async () => {
+    const principal = keypair();
+    const agent = keypair();
+    const delegation = mintDelegation({
+      delegatedTo: agent.pub,
+      delegatedBy: principal.pub,
+      scope: ["book_flights"],
+      maxDepth: 2,
+      currentDepth: 0,
+      signerPriv: principal.priv,
+    });
+    const revocation = mintRevocationCamel(
+      delegation["delegationId"] as string,
+      principal.pub,
+      principal.priv
+    );
+    const receipt = mintReceipt({
+      agentId: "agent-a",
+      delegationId: delegation["delegationId"] as string,
+      action: { type: "t", target: "x", scope_used: "book_flights" },
+      delegationChain: [principal.pub, agent.pub],
+      signerPriv: agent.priv,
+    });
+    const v = await agentPassport.verify({
+      receipt,
+      delegations: [delegation],
+      revocations: [revocation],
+    });
+    assert.equal(v.valid, false);
+    assert.match(v.errors[0], /AP_REVOKED/);
+  });
+
+  it("rejects mixed naming within a receipt (AP_MIXED_NAMING)", async () => {
+    const receipt = {
+      receipt_id: "rcpt_x",
+      agentId: "agent-a", // camelCase mixed into a snake_case receipt
+      delegation_id: "d",
+      signature: "s",
+      timestamp: iso(NOW),
+      action: { type: "t", scope_used: "s" },
+      result: { status: "ok", summary: "ok" },
+    };
+    assert.equal(agentPassport.detect(receipt), false);
+    const v = await agentPassport.verify(receipt);
+    assert.equal(v.valid, false);
+    assert.match(v.errors[0], /AP_MIXED_NAMING/);
+  });
+
+  it("rejects duplicate aliases even when one is null (AP_DUPLICATE_ALIAS)", async () => {
+    const receipt = {
+      receipt_id: "rcpt_x",
+      receiptId: null, // duplicate alias with a null value
+      agent_id: "agent-a",
+      delegation_id: "d",
+      signature: "s",
+      timestamp: iso(NOW),
+      action: { type: "t", scope_used: "s" },
+      result: { status: "ok", summary: "ok" },
+    };
+    const v = await agentPassport.verify(receipt);
+    assert.equal(v.valid, false);
+    assert.match(v.errors[0], /AP_DUPLICATE_ALIAS/);
+  });
+
+  it("rejects mixed naming within a delegation (AP_MIXED_NAMING)", async () => {
+    const principal = keypair();
+    const agent = keypair();
+    const delegation = {
+      delegationId: "del_x",
+      delegated_to: agent.pub, // snake_case mixed into a camelCase delegation
+      delegatedBy: principal.pub,
+      scope: ["s"],
+      expiresAt: iso(NOW + 3600_000),
+      signature: "s",
+    };
+    const receipt = mintReceipt({
+      agentId: "agent-a",
+      delegationId: "del_x",
+      action: { type: "t", target: "x", scope_used: "s" },
+      delegationChain: [principal.pub, agent.pub],
+      signerPriv: agent.priv,
+    });
+    const v = await agentPassport.verify({ receipt, delegations: [delegation] });
+    assert.equal(v.valid, false);
+    assert.match(v.errors[0], /AP_MIXED_NAMING/);
+  });
+
+  it("verifies the signature over the original member names, not the normalized ones", async () => {
+    // Sign the snake_case bytes but present a camelCase receipt. If the
+    // verifier normalized before verifying, this would pass; it must fail
+    // with AP_BAD_SIGNATURE because the preimage carries the received names.
+    const { principal, agent, delegation } = basicSetup();
+    const unsignedCamel: Record<string, unknown> = {
+      receiptId: "rcpt_respelling",
+      version: "1.1",
+      timestamp: iso(NOW - 60_000),
+      agentId: "agent-a",
+      delegationId: delegation["delegationId"] as string,
+      action: { type: "t", target: "x", scopeUsed: "book_flights" },
+      result: { status: "success", summary: "ok" },
+      delegationChain: [principal.pub, agent.pub],
+    };
+    const unsignedSnake: Record<string, unknown> = {
+      receipt_id: unsignedCamel["receiptId"],
+      version: "1.1",
+      timestamp: unsignedCamel["timestamp"],
+      agent_id: unsignedCamel["agentId"],
+      delegation_id: unsignedCamel["delegationId"],
+      action: { type: "t", target: "x", scope_used: "book_flights" },
+      result: { status: "success", summary: "ok" },
+      delegation_chain: unsignedCamel["delegationChain"],
+    };
+    const receipt = { ...unsignedCamel, signature: edSign(unsignedSnake, agent.priv) };
+    const v = await agentPassport.verify({ receipt, delegations: [delegation] });
+    assert.equal(v.valid, false);
+    assert.match(v.errors[0], /AP_BAD_SIGNATURE/);
+  });
+
+  it("still verifies a fully snake_case document end to end", async () => {
+    const principal = keypair();
+    const agent = keypair();
+    const delegation = mintDelegationSnake({
+      delegatedTo: agent.pub,
+      delegatedBy: principal.pub,
+      scope: ["book_flights"],
+      maxDepth: 2,
+      currentDepth: 0,
+      signerPriv: principal.priv,
+    });
+    const receipt = mintReceipt({
+      agentId: "agent-a",
+      delegationId: delegation["delegation_id"] as string,
+      action: { type: "t", target: "x", scope_used: "book_flights" },
+      delegationChain: [principal.pub, agent.pub],
+      signerPriv: agent.priv,
+    });
+    const v = await agentPassport.verify({ receipt, delegations: [delegation] });
+    assert.equal(v.valid, true);
+    assert.ok(
+      v.receipt!.lossy.some((l) => l.includes("receipt=snake_case")),
+      "lossy should record receipt=snake_case"
+    );
+  });
+});

@@ -32,9 +32,13 @@
  * Sub-delegating sets newDepth = parent.currentDepth + 1 and MUST be refused
  * when newDepth > parent.maxDepth; children inherit the parent's maxDepth
  * ceiling and cannot increase it. If maxDepth is omitted, SPEC-v1.1 section
- * 3.4 says implementations MUST default to max_depth: 1. (Note: section 4.1
- * of the same doc contradicts this and says "unlimited if absent"; the
- * reference code uses `maxDepth ?? 1`, and this adapter follows the code.)
+ * 3.4 says implementations MUST default to max_depth: 1, while section 4.1
+ * says "unlimited if absent". Their reference verification now reads 4.1 as
+ * no depth ceiling when the field is absent (maintainer confirmation
+ * 2026-10-11, issue #216); this adapter keeps a ceiling of 1 as a local
+ * acceptance policy, which the maintainer accepted as a legitimate local
+ * difference (their errata item 3). Neither default proves the depth of the
+ * full chain.
  *
  * Revocation (offline boundary): revocation checking in their system needs
  * either their gateway DelegationStore (moved out of the pure SDK — the pure
@@ -86,6 +90,8 @@ export const AGENT_PASSPORT_ERRORS = {
   SCOPE_VIOLATION: "AP_SCOPE_VIOLATION",
   OVER_BUDGET: "AP_OVER_BUDGET",
   REVOKED: "AP_REVOKED",
+  MIXED_NAMING: "AP_MIXED_NAMING", // adapter extension (issue #216)
+  DUPLICATE_ALIAS: "AP_DUPLICATE_ALIAS", // adapter extension (issue #216)
 } as const;
 
 export const AGENT_PASSPORT_WARNINGS = {
@@ -209,6 +215,112 @@ function isRecord(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
 }
 
+// ---------------------------------------------------------------------------
+// Dual member-name spelling (issue #216, maintainer-confirmed 2026-10-11)
+//
+// Their TypeScript SDK emits camelCase member names; the specification
+// documents snake_case. The maintainer confirmed the adapter should accept
+// either complete convention per signed object: apply the same schema,
+// version and chain checks to both shapes, verify signatures over the
+// canonical preimage with the ORIGINAL member names (before any
+// normalization), reject mixed spellings within one object, and reject
+// duplicate aliases even when one spelling carries null.
+//
+// Convention is enforced per signed object, not per document: each receipt,
+// delegation and revocation record is signed independently over its own
+// member names, so a snake_case receipt paired with camelCase delegations is
+// unambiguous. Mixed spellings WITHIN one object are the dangerous case.
+// ---------------------------------------------------------------------------
+
+type NamingConvention = "snake_case" | "camelCase" | "undetermined";
+
+/** [spec snake_case, SDK camelCase] pairs per object kind. */
+const RECEIPT_ALIASES: ReadonlyArray<readonly [string, string]> = [
+  ["receipt_id", "receiptId"],
+  ["agent_id", "agentId"],
+  ["delegation_id", "delegationId"],
+  ["delegation_chain", "delegationChain"],
+  ["previous_receipt_hash", "previousReceiptHash"],
+];
+const ACTION_ALIASES: ReadonlyArray<readonly [string, string]> = [
+  ["scope_used", "scopeUsed"],
+];
+const DELEGATION_ALIASES: ReadonlyArray<readonly [string, string]> = [
+  ["delegation_id", "delegationId"],
+  ["delegated_to", "delegatedTo"],
+  ["delegated_by", "delegatedBy"],
+  ["scope_interpretation", "scopeInterpretation"],
+  ["expires_at", "expiresAt"],
+  ["not_before", "notBefore"],
+  ["spend_limit", "spendLimit"],
+  ["spent_amount", "spentAmount"],
+  ["spend_limit_unit", "spendLimitUnit"],
+  ["max_depth", "maxDepth"],
+  ["current_depth", "currentDepth"],
+  ["created_at", "createdAt"],
+  ["revocation_check_url", "revocationCheckUrl"],
+];
+const REVOCATION_ALIASES: ReadonlyArray<readonly [string, string]> = [
+  ["revocation_id", "revocationId"],
+  ["delegation_id", "delegationId"],
+  ["revoked_by", "revokedBy"],
+  ["revoked_at", "revokedAt"],
+];
+
+/**
+ * Detect which member-name convention an object uses. Throws FormatError on
+ * mixed spellings or duplicate aliases. Presence is by key with a defined
+ * value: a duplicate alias is rejected even when one spelling carries null
+ * (the canonical form would silently drop the null and hide the ambiguity),
+ * but `undefined` values are ignored — they cannot survive a JSON round-trip,
+ * so they were never part of what the signer signed.
+ */
+function detectNaming(
+  obj: Record<string, unknown>,
+  aliases: ReadonlyArray<readonly [string, string]>,
+  what: string
+): NamingConvention {
+  const present = (k: string): boolean =>
+    Object.prototype.hasOwnProperty.call(obj, k) && obj[k] !== undefined;
+  let sawSnake = false;
+  let sawCamel = false;
+  for (const [snake, camel] of aliases) {
+    const hasSnake = present(snake);
+    const hasCamel = present(camel);
+    if (hasSnake && hasCamel) {
+      throw new FormatError(
+        `${AGENT_PASSPORT_ERRORS.DUPLICATE_ALIAS}: ${what} contains both '${snake}' and '${camel}'`
+      );
+    }
+    if (hasSnake) sawSnake = true;
+    if (hasCamel) sawCamel = true;
+  }
+  if (sawSnake && sawCamel) {
+    throw new FormatError(
+      `${AGENT_PASSPORT_ERRORS.MIXED_NAMING}: ${what} mixes snake_case and camelCase member names`
+    );
+  }
+  return sawCamel ? "camelCase" : sawSnake ? "snake_case" : "undetermined";
+}
+
+/** Shallowly rename aliased members to the target convention. Nested objects
+ *  (action, spend) are handled by the caller with their own alias tables. */
+function applyNaming(
+  obj: Record<string, unknown>,
+  aliases: ReadonlyArray<readonly [string, string]>,
+  target: "snake" | "camel"
+): Record<string, unknown> {
+  const rename = new Map<string, string>();
+  for (const [snake, camel] of aliases) {
+    rename.set(target === "snake" ? camel : snake, target === "snake" ? snake : camel);
+  }
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(obj)) {
+    out[rename.get(k) ?? k] = v;
+  }
+  return out;
+}
+
 export interface AgentPassportAction {
   type: string;
   target: string;
@@ -228,7 +340,7 @@ export interface AgentPassportReceipt {
   result: { status: string; summary: string; [k: string]: unknown };
   delegation_chain: string[];
   signature: string;
-  previousReceiptHash?: string;
+  previous_receipt_hash?: string;
   [k: string]: unknown;
 }
 
@@ -266,10 +378,27 @@ export interface AgentPassportRevocation {
 }
 
 interface ParsedInput {
+  // Naming-normalized internal views (receipt/action: snake_case;
+  // delegations: camelCase; revocations: snake_case). All shape validation
+  // and every check except signature verification runs against these.
   receipt: AgentPassportReceipt;
   delegations: AgentPassportDelegation[];
   revocations: AgentPassportRevocation[];
   envelope: boolean;
+  naming: {
+    receipt: NamingConvention;
+    action: NamingConvention;
+    delegations: NamingConvention[];
+    revocations: NamingConvention[];
+  };
+  // Original received objects, with original member names. Signature
+  // verification MUST use these: the canonical preimage carries the exact
+  // bytes the signer signed, before any normalization.
+  originals: {
+    receipt: Record<string, unknown>;
+    delegations: Record<string, unknown>[];
+    revocations: Record<string, unknown>[];
+  };
 }
 
 class FormatError extends Error {}
@@ -309,7 +438,26 @@ function parseInput(input: unknown): ParsedInput {
       `${AGENT_PASSPORT_ERRORS.UNKNOWN_FORMAT}: receipt must be a JSON object`
     );
   }
-  const r = receiptObj as Record<string, unknown>;
+  const rawReceipt = receiptObj as Record<string, unknown>;
+
+  // Naming first: mixed spellings and duplicate aliases fail here, before
+  // any shape validation, so a malformed object never reaches the checks.
+  const receiptNaming = detectNaming(rawReceipt, RECEIPT_ALIASES, "receipt");
+  const rawAction = rawReceipt["action"];
+  const actionNaming = isRecord(rawAction)
+    ? detectNaming(rawAction, ACTION_ALIASES, "receipt.action")
+    : "undetermined";
+
+  // Normalize to the internal conventions (receipt/action -> snake_case),
+  // then run the existing shape validation unchanged on the normalized view.
+  const r = applyNaming(rawReceipt, RECEIPT_ALIASES, "snake");
+  if (isRecord(r["action"])) {
+    r["action"] = applyNaming(
+      r["action"] as Record<string, unknown>,
+      ACTION_ALIASES,
+      "snake"
+    );
+  }
   const action = r["action"];
   for (const [field, check] of [
     ["receipt_id", (v: unknown) => typeof v === "string"],
@@ -336,15 +484,31 @@ function parseInput(input: unknown): ParsedInput {
   }
 
   const parsedDelegations: AgentPassportDelegation[] = [];
+  const rawDelegations: Record<string, unknown>[] = [];
+  const delegationNamings: NamingConvention[] = [];
   if (delegations !== undefined) {
     if (!Array.isArray(delegations)) {
       throw new FormatError(
         `${AGENT_PASSPORT_ERRORS.UNKNOWN_FORMAT}: delegations must be an array`
       );
     }
-    for (const d of delegations) parsedDelegations.push(parseDelegation(d));
+    for (const d of delegations) {
+      if (!isRecord(d)) {
+        throw new FormatError(
+          `${AGENT_PASSPORT_ERRORS.UNKNOWN_FORMAT}: delegation must be an object`
+        );
+      }
+      delegationNamings.push(detectNaming(d, DELEGATION_ALIASES, "delegation"));
+      rawDelegations.push(d);
+      // Internal delegation convention is camelCase (matches the reference SDK).
+      parsedDelegations.push(
+        parseDelegation(applyNaming(d, DELEGATION_ALIASES, "camel"))
+      );
+    }
   }
   const parsedRevocations: AgentPassportRevocation[] = [];
+  const rawRevocations: Record<string, unknown>[] = [];
+  const revocationNamings: NamingConvention[] = [];
   if (revocations !== undefined) {
     if (!Array.isArray(revocations)) {
       throw new FormatError(
@@ -357,7 +521,12 @@ function parseInput(input: unknown): ParsedInput {
           `${AGENT_PASSPORT_ERRORS.UNKNOWN_FORMAT}: revocation records must be objects with a signature`
         );
       }
-      parsedRevocations.push(rv as AgentPassportRevocation);
+      revocationNamings.push(detectNaming(rv, REVOCATION_ALIASES, "revocation"));
+      rawRevocations.push(rv);
+      // Internal revocation convention is snake_case.
+      parsedRevocations.push(
+        applyNaming(rv, REVOCATION_ALIASES, "snake") as unknown as AgentPassportRevocation
+      );
     }
   }
 
@@ -366,6 +535,17 @@ function parseInput(input: unknown): ParsedInput {
     delegations: parsedDelegations,
     revocations: parsedRevocations,
     envelope,
+    naming: {
+      receipt: receiptNaming,
+      action: actionNaming,
+      delegations: delegationNamings,
+      revocations: revocationNamings,
+    },
+    originals: {
+      receipt: rawReceipt,
+      delegations: rawDelegations,
+      revocations: rawRevocations,
+    },
   };
 }
 
@@ -484,7 +664,7 @@ function verifySync(input: unknown, opts: VerifyOptions): Verdict {
     const msg = e instanceof Error ? e.message : String(e);
     return { valid: false, format: FORMAT_ID, receipt: null, errors: [msg], warnings: [] };
   }
-  const { receipt, delegations, revocations } = parsed;
+  const { receipt, delegations, revocations, originals } = parsed;
   const atMs = opts.at ? opts.at.getTime() : Date.now();
   const maxChainDepth = opts.maxChainDepth ?? 5;
 
@@ -506,12 +686,19 @@ function verifySync(input: unknown, opts: VerifyOptions): Verdict {
     // --- receipt timestamp must be a readable instant
     const receiptMs = parseInstant("receipt.timestamp", receipt.timestamp);
 
-    // --- resolve signer key and verify the Ed25519 signature
+    // --- resolve signer key and verify the Ed25519 signature.
+    // The signature is verified over the ORIGINAL received object: the
+    // canonical preimage carries the signer's exact member names, before
+    // any naming normalization (issue #216).
     executorKey = resolveExecutorKey(receipt, delegations);
-    if (!verifyApsSignature(receipt, receipt.signature, executorKey)) {
+    const rawReceiptSig = originals.receipt["signature"];
+    if (
+      typeof rawReceiptSig !== "string" ||
+      !verifyApsSignature(originals.receipt, rawReceiptSig, executorKey)
+    ) {
       fail(
         AGENT_PASSPORT_ERRORS.BAD_SIGNATURE,
-        "Ed25519 signature over APS canonical JSON (signature field excluded) does not verify with the executing agent's key"
+        "Ed25519 signature over APS canonical JSON (signature field excluded, original member names) does not verify with the executing agent's key"
       );
     }
 
@@ -540,14 +727,15 @@ function verifySync(input: unknown, opts: VerifyOptions): Verdict {
         const d = delegations[i];
         const tag = `delegations[${i}] (${d.delegationId})`;
 
-        // signature by the delegator (delegatedBy key), canonical input
+        // signature by the delegator (delegatedBy key), canonical input over
+        // the ORIGINAL member names (issue #216)
         if (!HEX64.test(d.delegatedBy) || !HEX64.test(d.delegatedTo)) {
           fail(
             AGENT_PASSPORT_ERRORS.CHAIN_BREAK,
             `${tag}: delegatedBy/delegatedTo must be 64-hex Ed25519 keys`
           );
         }
-        if (!verifyApsSignature(d, d.signature, d.delegatedBy)) {
+        if (!verifyApsSignature(originals.delegations[i], d.signature, d.delegatedBy)) {
           fail(
             AGENT_PASSPORT_ERRORS.BAD_SIGNATURE,
             `${tag}: delegation signature does not verify with the delegator key`
@@ -720,11 +908,14 @@ function verifySync(input: unknown, opts: VerifyOptions): Verdict {
         }
       }
 
-      for (const rv of revocations) {
-        const targetId = rv.delegation_id ?? rv.delegationId;
-        const revoker = (rv.revoked_by ?? rv.revokedBy ?? "") as string;
+      for (let ri = 0; ri < revocations.length; ri++) {
+        const rv = revocations[ri];
+        // Internal revocation convention is snake_case (normalized at parse).
+        const targetId = rv.delegation_id;
+        const revoker = (rv.revoked_by ?? "") as string;
         if (typeof targetId !== "string" || !HEX64.test(revoker)) continue;
-        if (!verifyApsSignature(rv as unknown as Record<string, unknown>, rv.signature, revoker)) {
+        // Signature verified over the ORIGINAL member names (issue #216).
+        if (!verifyApsSignature(originals.revocations[ri], rv.signature, revoker)) {
           warnings.push(
             `${AGENT_PASSPORT_WARNINGS.BAD_REVOCATION_SIGNATURE}: revocation for ${targetId} has an invalid signature; ignored`
           );
@@ -788,9 +979,9 @@ function verifySync(input: unknown, opts: VerifyOptions): Verdict {
 
     // append-only linkage note (digest pin is an adapter decision — their spec
     // does not pin the previousReceiptHash digest; see notes)
-    if (typeof receipt.previousReceiptHash === "string") {
+    if (typeof receipt.previous_receipt_hash === "string") {
       warnings.push(
-        `${AGENT_PASSPORT_WARNINGS.PREVIOUS_LINK_UNCHECKED}: previousReceiptHash present but the prior receipt was not supplied, so the append-only link was not verified`
+        `${AGENT_PASSPORT_WARNINGS.PREVIOUS_LINK_UNCHECKED}: previous_receipt_hash present but the prior receipt was not supplied, so the append-only link was not verified`
       );
     }
   } catch (e) {
@@ -846,6 +1037,14 @@ function normalizeParsed(
   const leaf = delegations.length > 0 ? delegations[delegations.length - 1] : null;
 
   const lossy: string[] = [];
+  // Record the observed member-name convention (issue #216): signatures were
+  // verified over the original member names before normalization.
+  const namingBits = [`receipt=${parsed.naming.receipt}`, `action=${parsed.naming.action}`];
+  parsed.naming.delegations.forEach((n, i) => namingBits.push(`delegations[${i}]=${n}`));
+  parsed.naming.revocations.forEach((n, i) => namingBits.push(`revocations[${i}]=${n}`));
+  lossy.push(
+    `member-name spelling observed (${namingBits.join(", ")}); signatures verified over the original member names before normalization`
+  );
   lossy.push(
     "action.result (status/summary) has no normalized field; preserved in raw"
   );
@@ -855,9 +1054,9 @@ function normalizeParsed(
   lossy.push(
     "delegation_chain fingerprints are not modeled; only the executing agent's key is normalized as issuer"
   );
-  if (receipt.previousReceiptHash !== undefined) {
+  if (receipt.previous_receipt_hash !== undefined) {
     lossy.push(
-      "previousReceiptHash append-only linkage is not represented in the normalized parent model; preserved in raw"
+      "previous_receipt_hash append-only linkage is not represented in the normalized parent model; preserved in raw"
     );
   }
   for (const f of [
@@ -928,9 +1127,11 @@ function normalizeParsed(
       pointer: ctx.revocationPointer,
       status: ctx.revocationStatus,
     },
+    // raw preserves the exact received bytes (original member names), not the
+    // normalized views.
     raw: parsed.envelope
-      ? { receipt: parsed.receipt, delegations: parsed.delegations, revocations: parsed.revocations }
-      : parsed.receipt,
+      ? { receipt: parsed.originals.receipt, delegations: parsed.originals.delegations, revocations: parsed.originals.revocations }
+      : parsed.originals.receipt,
     lossy,
   };
 }

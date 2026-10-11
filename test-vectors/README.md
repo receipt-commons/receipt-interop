@@ -84,9 +84,9 @@ Each vector:
 
 | Category | Count | What's covered |
 |---|---|---|
-| `valid` | 7 | compact text-scope; compact structured scope (constraints, denials, agentId, metadata, trustedSources); missing `typ` (warning); `kid` header; instructionsHash-mismatch warning; revocationRequired-without-check (warning); detached RFC 7797 incl. 6.6 receiptId rule |
+| `valid` | 8 | compact text-scope; compact structured scope (constraints, denials, agentId, metadata, trustedSources); missing `typ` (warning); `kid` header; instructionsHash-mismatch warning; revocationRequired-without-check (warning); detached RFC 7797 incl. 6.6 receiptId rule; metadata.displayLabel preserves decision (Iman case 1) |
 | `signature` | 5 | wrong-key signature; **DER-encoded signature rejected** (genuine DER that verifies as DER); malformed (32-byte) signature; `alg:none` → denied; unsupported `alg` → denied |
-| `body` | 9 | tampered payload; non-canonical (non-JCS) payload; non-JSON payload; missing `delegationId`; malformed `instructionsHash`; malformed `timeWindow`; mismatched `signerPublicKey` (P-384); malformed `scopeSchema`; unknown field in payload (rejected — see interop note) |
+| `body` | 11 | tampered payload; non-canonical (non-JCS) payload; non-JSON payload; missing `delegationId`; malformed `instructionsHash`; malformed `timeWindow`; mismatched `signerPublicKey` (P-384); malformed `scopeSchema`; unknown field in payload (rejected — see interop note); unknown authority field (Iman case 2); `oneTimeUse:true` fail-closed (Iman case 3) |
 | `header` | 3 | `b64:false` in compact form; detached header missing `b64:false`/`crit:["b64"]`; unrecognized `crit` parameter |
 | `time` | 2 | expired window; not-yet-valid window |
 | `revocation` | 1 | `revocationRequired:true` + registry check requested → fail-closed denial |
@@ -98,11 +98,11 @@ Each vector:
 
 - **Revocation registry:** the reference implementation ships no registry (distribution is out of scope per draft section 14), so there is no vector for a positively-revoked receipt or `ANCESTOR_REVOKED`. Revocation coverage is the fail-closed behavior: `revocationRequired:true` denies when a check is requested and warns when it isn't.
 - **Per-action allow/deny:** `verifyReceipt` takes no action parameter, so scopeSchema allow/deny decisions against a concrete action are not exercised; the suite covers schema structure, structured-vs-advisory mapping, and chain attenuation instead.
-- **`oneTimeUse`:** parsed but not enforced by the reference implementation (no consumption store); no vector asserts on it.
+- **`oneTimeUse`:** fail-closed per draft 9.5. The reference implementation ships no durable consumption store, so a receipt with `oneTimeUse: true` is denied with `CONSUMPTION_STORE_REQUIRED`; vector `iman-case-3-onetimeuse-fail-closed` pins this.
 - **COSE profile:** recognized but explicitly not implemented by the reference (`COSE_NOT_IMPLEMENTED`); not covered here.
 - **ED25519/ES384/ES512:** optional per the draft registry; no vectors mint them.
 
 ## Interop notes found while minting
 
-1. **Unknown fields (draft 4.1).** The draft says verifiers MUST ignore unknown body fields but signers MUST NOT include them in the canonicalized signing input. The reference verifier enforces the signer rule strictly: a payload carrying an unknown field is rejected as non-canonical (`PAYLOAD_NOT_JCS_CANONICAL`) rather than having the field ignored. Vector `unknown-field-in-payload-rejected` pins this behavior; independent implementations should pick a reading and document it.
+1. **Unknown fields (draft 4.1, -12 direction per Iman Schrock).** Authorization fields are closed: a payload carrying an unknown top-level body field is rejected with `UNKNOWN_BODY_FIELD` — never silently allowed. Extensions belong inside `metadata`, whose contents are ignored by the verifier (vector `iman-case-1-metadata-display-label` pins that the decision is unchanged). Vectors `unknown-field-in-payload-rejected` and `iman-case-2-unknown-authority-field-rejected` pin the rejection, including for an authority constraint the verifier cannot interpret.
 2. **Non-ES256 algorithms.** The reference verifier defines `ALG_NONE_PROHIBITED` / `ALG_UNSUPPORTED` codes, but its format detector only claims ES256 inputs, so through the public API `alg:none` and `alg:RS256` receipts are denied one layer earlier as `UNKNOWN_FORMAT`. Vectors `alg-none-prohibited` and `alg-unsupported` pin the denial; the exact code is implementation-defined.

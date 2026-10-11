@@ -231,6 +231,42 @@ test('non-JCS payload fails even with a valid signature over those bytes', async
   assert.ok(verdict.errors.includes('PAYLOAD_NOT_JCS_CANONICAL'));
 });
 
+test('metadata.displayLabel preserves the verification decision (Iman case 1)', async () => {
+  const k = genKey();
+  const compact = makeCompact(
+    baseBody(k.pubJwk, { metadata: { displayLabel: 'Quarterly report job', ticket: 'OPS-1234' } }),
+    k.priv,
+  );
+  const verdict = await verifyReceipt(compact, { at: AT });
+  assert.equal(verdict.valid, true);
+  assert.deepEqual(verdict.errors, []);
+});
+
+test('unknown top-level field fails with UNKNOWN_BODY_FIELD, never an allow (Iman case 2)', async () => {
+  const k = genKey();
+  // An authority constraint the verifier cannot interpret: valid signature
+  // over the bytes, but the decision must still not be an allow.
+  const compact = makeCompact(baseBody(k.pubJwk, { authorityConstraint: 'm-of-2' }), k.priv);
+  const verdict = await verifyReceipt(compact, { at: AT });
+  assert.equal(verdict.valid, false);
+  assert.ok(verdict.errors.some((e) => e.startsWith('UNKNOWN_BODY_FIELD')));
+});
+
+test('oneTimeUse:true fails closed with CONSUMPTION_STORE_REQUIRED (Iman case 3)', async () => {
+  const k = genKey();
+  const compact = makeCompact(baseBody(k.pubJwk, { oneTimeUse: true }), k.priv);
+  const verdict = await verifyReceipt(compact, { at: AT });
+  assert.equal(verdict.valid, false);
+  assert.ok(verdict.errors.includes('CONSUMPTION_STORE_REQUIRED'));
+});
+
+test('oneTimeUse:false verifies normally', async () => {
+  const k = genKey();
+  const compact = makeCompact(baseBody(k.pubJwk, { oneTimeUse: false }), k.priv);
+  const verdict = await verifyReceipt(compact, { at: AT });
+  assert.equal(verdict.valid, true);
+});
+
 test('detached form with an altered payload fails signature verification', async () => {
   const k = genKey();
   // Alter a byte inside a string value: the payload stays valid canonical

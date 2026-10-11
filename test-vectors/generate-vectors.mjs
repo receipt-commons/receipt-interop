@@ -668,10 +668,10 @@ const OPTS = { at: AT, checkRevocation: false };
 
 {
   const k = genKey();
-  // Draft 4.1 says verifiers MUST ignore unknown fields, but ALSO that they
-  // MUST NOT appear in the canonicalized signing input — so the reference
-  // verifier requires the payload to be byte-identical to JCS(known fields
-  // only). A payload that still carries an unknown field fails here.
+  // Iman Schrock's pinned case 2 (-12 direction): authorization fields are
+  // closed. A payload carrying an unknown top-level field is rejected with
+  // UNKNOWN_BODY_FIELD — never silently allowed. Extensions belong inside
+  // `metadata` (case 1).
   const compact = makeCompact(
     { ...baseBody(k.pub), delegationId: 'tv-body-08', vendorNote: 'hello' },
     k.priv,
@@ -680,7 +680,7 @@ const OPTS = { at: AT, checkRevocation: false };
     id: 'unknown-field-in-payload-rejected',
     category: 'body',
     description:
-      'INTEROP NOTE: payload carries an unknown field. Draft 4.1 tells signers to strip unknown fields before canonicalization and tells verifiers to ignore them; the reference verifier enforces the signer rule strictly and rejects the payload as non-canonical (PAYLOAD_NOT_JCS_CANONICAL) rather than ignoring the field. Independent implementations should decide which reading they follow and document it.',
+      'Pinned case 2 (Iman Schrock): payload carries an unknown top-level field. Authorization fields are closed — the verifier rejects with UNKNOWN_BODY_FIELD rather than ignoring the field. Signers must not include unknown fields; extensions belong inside metadata.',
     profile: 'jws-compact',
     mode: 'receipt',
     draftSection: '4.1',
@@ -689,7 +689,95 @@ const OPTS = { at: AT, checkRevocation: false };
     expect: {
       valid: false,
       format: 'authproof-jws',
-      errors: ['PAYLOAD_NOT_JCS_CANONICAL'],
+      errors: ['UNKNOWN_BODY_FIELD'],
+      warnings: [],
+    },
+  });
+}
+
+{
+  const k = genKey();
+  // Iman Schrock's pinned case 1: unknown fields inside `metadata` are
+  // ignored and the verification decision is unchanged.
+  const compact = makeCompact(
+    {
+      ...baseBody(k.pub),
+      delegationId: 'tv-iman-case-1',
+      metadata: { displayLabel: 'Quarterly report job', ticket: 'OPS-1234' },
+    },
+    k.priv,
+  );
+  V({
+    id: 'iman-case-1-metadata-display-label',
+    category: 'valid',
+    description:
+      'Pinned case 1 (Iman Schrock): adding metadata.displayLabel preserves the verification decision. Unknown fields inside metadata are ignored; the receipt verifies exactly as without them.',
+    profile: 'jws-compact',
+    mode: 'receipt',
+    draftSection: '4.3',
+    input: compact,
+    options: { ...OPTS },
+    expect: {
+      valid: true,
+      format: 'authproof-jws',
+      errors: [],
+      warnings: [],
+      receipt: receiptSpotChecks(compact),
+    },
+  });
+}
+
+{
+  const k = genKey();
+  // Iman Schrock's pinned case 2, authority-constraint flavor: an authority
+  // constraint the verifier cannot interpret must not produce an allow —
+  // even with a valid signature over the bytes.
+  const compact = makeCompact(
+    { ...baseBody(k.pub), delegationId: 'tv-iman-case-2', authorityConstraint: 'm-of-2' },
+    k.priv,
+  );
+  V({
+    id: 'iman-case-2-unknown-authority-field-rejected',
+    category: 'body',
+    description:
+      'Pinned case 2 (Iman Schrock): an authority constraint the verifier cannot interpret (unknown top-level field, valid signature) must not produce an allow. Rejected with UNKNOWN_BODY_FIELD.',
+    profile: 'jws-compact',
+    mode: 'receipt',
+    draftSection: '4.1',
+    input: compact,
+    options: { ...OPTS },
+    expect: {
+      valid: false,
+      format: 'authproof-jws',
+      errors: ['UNKNOWN_BODY_FIELD'],
+      warnings: [],
+    },
+  });
+}
+
+{
+  const k = genKey();
+  // Iman Schrock's pinned case 3 / draft -11 section 9.5: oneTimeUse:true
+  // requires a durable, shared consumption store. This verifier ships none,
+  // so it fails closed with CONSUMPTION_STORE_REQUIRED.
+  const compact = makeCompact(
+    { ...baseBody(k.pub), delegationId: 'tv-iman-case-3', oneTimeUse: true },
+    k.priv,
+  );
+  V({
+    id: 'iman-case-3-onetimeuse-fail-closed',
+    category: 'body',
+    description:
+      'Pinned case 3 (Iman Schrock; draft 9.5): oneTimeUse:true must refuse authorization when durable consumption is unavailable. This verifier has no consumption store, so it denies with CONSUMPTION_STORE_REQUIRED (fail closed).',
+    profile: 'jws-compact',
+    mode: 'receipt',
+    draftSection: '9.5',
+    input: compact,
+    options: { ...OPTS },
+    expect: {
+      valid: false,
+      format: 'authproof-jws',
+      errors: ['CONSUMPTION_STORE_REQUIRED'],
       warnings: [],
     },
   });

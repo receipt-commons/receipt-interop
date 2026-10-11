@@ -76,6 +76,7 @@ interface ReceiptBody {
   agentId: string | null;
   parentReceiptId: string | null;
   revocationRequired: boolean;
+  oneTimeUse: boolean;
   scopeSchema: ScopeSchema | null;
 }
 
@@ -342,15 +343,17 @@ function validateBody(payloadBytes: Uint8Array): {
   }
   const obj = parsed as Record<string, unknown>;
 
-  // Section 4.1: unknown fields are dropped before canonicalization, and the
-  // payload must be byte-identical to the JCS of what remains.
+  // Iman Schrock's pinned case 2 (-12 direction): authorization fields are
+  // closed. An unknown top-level body field is never silently allowed —
+  // extensions belong inside `metadata` (case 1). Fail fast with a dedicated
+  // code rather than the generic canonicalization error.
   const unknownFields = Object.keys(obj).filter((k) => !KNOWN_BODY_FIELDS.has(k));
+  if (unknownFields.length > 0) {
+    fail('UNKNOWN_BODY_FIELD', unknownFields.sort().join(','));
+  }
   const known: Record<string, unknown> = {};
   for (const k of Object.keys(obj)) {
     if (KNOWN_BODY_FIELDS.has(k)) known[k] = obj[k];
-  }
-  if (unknownFields.length > 0) {
-    lossy.push(`UNKNOWN_FIELDS_DROPPED:${unknownFields.sort().join(',')}`);
   }
   let canonical: string;
   try {
@@ -443,6 +446,7 @@ function validateBody(payloadBytes: Uint8Array): {
     agentId,
     parentReceiptId,
     revocationRequired: known.revocationRequired === true,
+    oneTimeUse: known.oneTimeUse === true,
     scopeSchema,
   };
 
@@ -722,6 +726,15 @@ async function verifyAuthproof(input: unknown, opts: VerifyOptions): Promise<Ver
       } else {
         warnings.push('ORCHESTRATOR_SIG_DEFERRED_TO_CHAIN');
       }
+    }
+
+    // Draft -11 section 9.5 / Iman Schrock's pinned case 3: one-time-use
+    // receipts require a durable, shared consumption store, and consumption
+    // is attempted only after every other check has passed. This verifier
+    // ships no consumption store, so fail closed: a receipt demanding
+    // single consumption must never verify as authorizing here.
+    if (body.oneTimeUse) {
+      errors.push('CONSUMPTION_STORE_REQUIRED');
     }
   }
 

@@ -1,0 +1,169 @@
+{
+  "format": "agent-delegation-receipt-interop-corpus/1",
+  "draft": "draft-nelson-agent-delegation-receipts-12",
+  "generated": "2026-10-13",
+  "generator": "receipt-interop test-vectors (ES256, throwaway P-256 keys; test material only)",
+  "profile": "JWS compact serialization, ES256 (REQUIRED per draft -12 section 6.5)",
+  "verificationTime": "Each case carries its own `options.at`; verify as-of that instant.",
+  "cases": [
+    {
+      "id": "interop-01-basic-valid",
+      "description": "Minimal valid compact JWS receipt (ES256, JCS payload, text scope). Draft 6.3.",
+      "profile": "jws-compact",
+      "draftSection": "6.3",
+      "expectedOutcome": "ACCEPT: minimal well-formed receipt, signature verifies, window covers verification time.",
+      "expected": {
+        "valid": true,
+        "errors": [],
+        "warnings": []
+      },
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "mode": "receipt",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXZhbGlkLWNvbXBhY3QtMDEiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IldmVGhtemNnRXBMUUpTVnFheUs0SjlCX1RPUkFFYjRrcEFLT0gzZzdTVDgiLCJ5IjoiOW1femUxUXNORXJOLVBiVldGaXFqLWpUS1psTEQ0SW1IemFnc05DN1NBSSJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19.g27BbBUP-mWoXz6iJtv5wKezsSE6eSChn2bnUMzyPtKFvLGfxQqv3fQu80SrwRWT1jhtLHaozoSjy0jU8XhtdQ"
+    },
+    {
+      "id": "interop-02-structured-scope-valid",
+      "description": "Valid compact receipt with enforced structured scopeSchema (constraints + deniedActions), agentId, metadata, trustedSources. Draft 4.3, 4.5, 8.1.",
+      "profile": "jws-compact",
+      "draftSection": "4.5",
+      "expectedOutcome": "ACCEPT: receipt with an enforced structured scope; scope schema itself is valid.",
+      "expected": {
+        "valid": true,
+        "errors": [],
+        "warnings": []
+      },
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "mode": "receipt",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJhZ2VudElkIjoiY2FsZW5kYXItYWdlbnQtMDEiLCJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXZhbGlkLWNvbXBhY3QtMDIiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwibWV0YWRhdGEiOnsic2Vzc2lvbiI6InR2LTAwMiJ9LCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsiY29uc3RyYWludHMiOnsibWF4RXZlbnRzIjoxMH0sIm9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifV0sImRlbmllZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn1dLCJ2ZXJzaW9uIjoiMS4wIn0sInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IlBybzNwMTA0UTFiLVJpNWM5RzNhUkN5aXNKTGwzeUtpNWdxV2NPUm1sVzQiLCJ5IjoiNWxYMlVGS3luczl4SGJSSjV5RzNyMm5zLVRFb3p0TEpFS05lLVI0UlVJRSJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn0sInRydXN0ZWRTb3VyY2VzIjpbInVzZXIiLCJzeXN0ZW1fcHJvbXB0Il19.5yamqbLaILJH1aOvm9TJjPnzf079yHy837yDJBOUy5UD8fkzba3OvsAyW8O02FJTbxYogy5jceYt8zsAOF6WJg"
+    },
+    {
+      "id": "interop-03-expired",
+      "description": "Verification time (12:30Z) is after the window end (12:00Z): TIME_WINDOW. Draft 4.2, 10 (check 3).",
+      "profile": "jws-compact",
+      "draftSection": "4.2",
+      "expectedOutcome": "REJECT: verification time is after the receipt time window (notAfter passed).",
+      "expected": {
+        "valid": false,
+        "errors": [
+          "TIME_WINDOW"
+        ],
+        "warnings": []
+      },
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "mode": "receipt",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXRpbWUtMDEiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IlRLbi1fcmNkRkNOcVBCa3JXRTVPR2NNR2JRb1NTNTJKMU9CUm9xbERUY1EiLCJ5Ijoib3F6MEVKU25wZV9GRGItQjFJR2ZqcTY5SnExQ0Jsdm00eDN2cklHLXNiVSJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMDowMDowMC4wMDBaIn19.uMo2vBN8U-CVeGjNAxWe8b0cNokzzdM5hTH9vINduwaZXQ7QkPhNkiISgUxjaC7nzoe-Ze5QqBWar_T1z9xRfA"
+    },
+    {
+      "id": "interop-04-scope-violation",
+      "description": "Scope attenuation violation: the child grants delete::calendar/events, a key the parent never held (literal operation::resource comparison, wildcards not expanded): CHAIN_HOP_1_SCOPE_ATTENUATION_VIOLATED. Draft 8.5.",
+      "profile": "jws-compact",
+      "draftSection": "8.5",
+      "expectedOutcome": "REJECT: child receipt grants an action class outside the parent scope (attenuation violation).",
+      "expected": {
+        "valid": false,
+        "errors": [
+          "CHAIN_HOP_1_SCOPE_ATTENUATION_VIOLATED"
+        ],
+        "warnings": []
+      },
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "mode": "chain",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiU0xjZlV6UXg1MnVKekpxWUc3Q0VFbXFLWDBVczRyWmM2bHZSak9fMDlTQSIsInkiOiJQM2EwNGE1N1dsanhDTEJhUXRmc3lJdkdTcGpMR25JN3hxaTVJWFNPN0ljIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.iw9x5zHdcRhBvJIRT0v7a_qMHKav9QRScI94cswTUTHfN0EXPrWEpHD0XuvDoGKZHgpH8zys1Z5GYqYRDmoTwg",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXdpZGUiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJwYXJlbnRSZWNlaXB0SWQiOiJhZDY0NDhkYjg1NTFmOWY4ZGRhMWQ0NGE2ZDI3ZjMxZTlkNGM0M2ViNWNhZTcwODA4OTgxNGUxZDczYjI3NzNhIiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn0seyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2FyY2hpdmUifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn1dLCJkZW5pZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9XSwidmVyc2lvbiI6IjEuMCJ9LCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJTWHpsR044YUtHZFV4YzF4VVpDZXZ5MFNSbHZKLUtfM0pMRnRCX0NCc0FzIiwieSI6Imk2dk9GUnlzNk8wVUVLU1VlYUxpVExQQlBnazF2WTZZYWtGeEFQOE42OTgifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDEyOjQ1OjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MTU6MDAuMDAwWiJ9fQ.GfHaTqXpwZMtUdeLL1c03tNxlWGjwzAtV30qH1A08PHpPUSAq0IgrwxqrEw4xksqkYSU0TrM4TsLgciGw2AExg",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246YWQ2NDQ4ZGI4NTUxZjlmOGRkYTFkNDRhNmQyN2YzMWU5ZDRjNDNlYjVjYWU3MDgwODk4MTRlMWQ3M2IyNzczYTplNWZjYmY0YTE1M2FmNWQwYTE1NjFlYzYyZTI2NzM2ZTNjOTkyNTkzM2JmMTQ2MDM4MTc0MmIzYzI1NWJkMzUy.fqKs3oB6ycRFIC-PHyt83htD1ViZf3E1HCtLxRfYXhpXOn1aBl3VIXRix8YF7axiuYgUz4bQU7k7KVIKoI7Drw"
+        }
+      ]
+    },
+    {
+      "id": "interop-05-revocation-required",
+      "description": "Receipt with revocationRequired:true and a registry check requested (checkRevocation=true): the reference implementation ships no registry (distribution out of scope, draft 14), so it fails closed with REVOCATION_CHECK_REQUIRED. Draft 9.4.",
+      "profile": "jws-compact",
+      "draftSection": "9.4",
+      "expectedOutcome": "REJECT (fail-closed): receipt requires revocation checking and the registry reports revoked/unavailable.",
+      "expected": {
+        "valid": false,
+        "errors": [
+          "REVOCATION_CHECK_REQUIRED"
+        ],
+        "warnings": []
+      },
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": true
+      },
+      "mode": "receipt",
+      "input": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LXJldi0wMSIsImluc3RydWN0aW9uc0hhc2giOiJjNzMwZGU3NThlNTg2ZTE5YTgxMDk4ZmExY2Q0MDcyMTE2MmRhOTgxN2ZhN2Y3ZTY1MTUyNGEyN2M5M2VlNGZiIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoiLCJvcGVyYXRvckluc3RydWN0aW9ucyI6IlJlYWQgdG9kYXkncyBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IGEgc3VtbWFyeSBmb3IgdGhlIDJwbSBzdGFuZHVwLiIsInJldm9jYXRpb25SZXF1aXJlZCI6dHJ1ZSwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzaWduZXJQdWJsaWNLZXkiOnsiY3J2IjoiUC0yNTYiLCJrdHkiOiJFQyIsIngiOiJ2Z0RyZXpSU2RQZ3VUQnFCVkxvUDBBLWxhTERXTXlQMkUyZ19VWEJ6aVFRIiwieSI6IkdnZFg2aDZLTGVmaDh1bnVqNW5XWVRxSXFiNVVMcDRFTEh6Q05yTVFkbGMifSwidGltZVdpbmRvdyI6eyJlbmQiOiIyMDI2LTEwLTA5VDEzOjAwOjAwLjAwMFoiLCJzdGFydCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiJ9fQ.jxlmUr43c3O7D5GQ060UnVJY0JVQH4QzWH4_81gcbiC2FL5tKzmDu_AdZPscqfcQBoqEQuayctGHq-GEUqM5RA"
+    },
+    {
+      "id": "interop-06-chain-valid-2hop",
+      "description": "Valid 2-hop delegation chain: root signature, child signature, orchestratorSignature over the exact binding string \"orchestrator-delegation:<parentId>:<childId>\" verified against the parent key, child window contained in parent window, child scope a strict proper subset of the parent scope (2 < 3 allowed actions, parent denial preserved). Draft 4.4, 8.5, 8.7, 10 (check 14).",
+      "profile": "jws-compact",
+      "draftSection": "8.7",
+      "expectedOutcome": "ACCEPT: 2-hop delegation chain; every hop signature-verifies, scopes attenuate, windows nest.",
+      "expected": {
+        "valid": true,
+        "errors": [],
+        "warnings": [
+          "CHAIN_OK",
+          "ORCHESTRATOR_SIG_OK"
+        ]
+      },
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "mode": "chain",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLXJvb3QiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJzY29wZSI6InJlYWQgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBtZWV0aW5nIHN1bW1hcmllcyIsInNjb3BlU2NoZW1hIjp7ImFsbG93ZWRBY3Rpb25zIjpbeyJvcGVyYXRpb24iOiJyZWFkIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifSx7Im9wZXJhdGlvbiI6IndyaXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9kcmFmdHMifSx7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvYXJjaGl2ZSJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiYnF6N2hqNUR1NU00ekVZU3I3NjZfRXN3MEVlN2pPdjZLS25xMlZySnBEcyIsInkiOiJ2QldTa01MUWtnRURnYXpNSzc3OE1MTnc1MkpqY0JBWWM5T1dfZF9mTnNNIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMzowMDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjAwOjAwLjAwMFoifX0.4IJkML_IHnXsbnVT5mkUnUIe4PcJNMe17fVuwX0j4ZkcZRWWzd03REkTd4MIHXk5-uBTDNi7BbZs20Xo8gUFfQ",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluLWNoaWxkIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiYzRiMmVkZjAzZDYwZGExYmJlZmFhNmYwMDliZGFhNTJjY2I3Mjg5YzFhZjlkM2I0YTI5YzQ3NTkyYmE1MjBhZCIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiaTZFS2JLUjUteDlFeU1BUEw3Q0lkeUZRdTlQYzB3RGlmcTFQYzZMMTgzWSIsInkiOiJ1S2gzQm9Dd24yOWV3ZG9KVi1JaWNwSk5vdTNjZWNISkNHa0wyY3hwU29vIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0NTowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjE1OjAwLjAwMFoifX0.eUp7-OqfGCRX_F7jU2Q9H861l0JFt-KxG5fpqs7z1eXp4BAIv83CoII5kJQWbQPBWoMAguGWY0ILRgjxEIt8YA",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246YzRiMmVkZjAzZDYwZGExYmJlZmFhNmYwMDliZGFhNTJjY2I3Mjg5YzFhZjlkM2I0YTI5YzQ3NTkyYmE1MjBhZDpmN2QyODk4MTIxNjBiYzA1YTMxNjgxNDA4ODNlZTgwYjc0N2Y0MDJmNGY2ODZkYjBjOTBiZjUzOTJmYWM1YzNm.HmCi6tIQeSDEtQcrIbA4M2UXzu_e-lnmrp2nSfBGuYrEdLCxkAia9QVuH9Yhyp9SkWNgingbwznqmrzZRtr0hg"
+        }
+      ]
+    },
+    {
+      "id": "interop-07-chain-valid-3hop",
+      "description": "Valid 3-hop chain (root at depth 0, leaf at depth 2, under the default maxDepth 3): every hop narrows scope and window, every orchestratorSignature verifies. Draft 8.6, 8.7.",
+      "profile": "jws-compact",
+      "draftSection": "8.6",
+      "expectedOutcome": "ACCEPT: 3-hop delegation chain within the default max depth.",
+      "expected": {
+        "valid": true,
+        "errors": [],
+        "warnings": [
+          "CHAIN_OK"
+        ]
+      },
+      "options": {
+        "at": "2026-10-09T12:30:00.000Z",
+        "checkRevocation": false
+      },
+      "mode": "chain",
+      "chain": [
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluMy1yb290IiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn0seyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2FyY2hpdmUifSx7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNvbnRhY3RzL2xpc3QifV0sImRlbmllZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn1dLCJ2ZXJzaW9uIjoiMS4wIn0sInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6ImxZTXNYYkdaS2hlY2YtVWlTeGpMeHNnMmNtSmhiRDFZdGdOeEdad0RvS1EiLCJ5IjoicmhRaTFqajBJcHZZbllOWmlnajRJeGZRSTg3a1VpRWFTeDBCNWdKT2FIYyJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTM6MDA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIn19.tLYJSWWcPZXqhNhFfaMaANBROkFllCTd1XMLt2mC_WWKbibwF3y5UQjq5Ehpf1sXahUz4NK9eHltGmwNgpjf6A",
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluMy1taWQiLCJpbnN0cnVjdGlvbnNIYXNoIjoiYzczMGRlNzU4ZTU4NmUxOWE4MTA5OGZhMWNkNDA3MjExNjJkYTk4MTdmYTdmN2U2NTE1MjRhMjdjOTNlZTRmYiIsImlzc3VlZEF0IjoiMjAyNi0xMC0wOVQxMjowMDowMC4wMDBaIiwib3BlcmF0b3JJbnN0cnVjdGlvbnMiOiJSZWFkIHRvZGF5J3MgY2FsZW5kYXIgZXZlbnRzIGFuZCBkcmFmdCBhIHN1bW1hcnkgZm9yIHRoZSAycG0gc3RhbmR1cC4iLCJwYXJlbnRSZWNlaXB0SWQiOiJkZmFlMjc0YmIyZWEyMjM3MTgwY2RiZjEzNDg0YjcyN2U3MDBhZjVkMWIwYWUwNjNmYmFmNjQ2OThhNjU5YzU2Iiwic2NvcGUiOiJyZWFkIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgbWVldGluZyBzdW1tYXJpZXMiLCJzY29wZVNjaGVtYSI6eyJhbGxvd2VkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoicmVhZCIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn0seyJvcGVyYXRpb24iOiJ3cml0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZHJhZnRzIn0seyJvcGVyYXRpb24iOiJkZWxldGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2FyY2hpdmUifV0sImRlbmllZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6ImRlbGV0ZSIsInJlc291cmNlIjoiY2FsZW5kYXIvZXZlbnRzIn1dLCJ2ZXJzaW9uIjoiMS4wIn0sInNpZ25lclB1YmxpY0tleSI6eyJjcnYiOiJQLTI1NiIsImt0eSI6IkVDIiwieCI6IjVvNlptUVIyeThvNFFHQjI1TVp0czFCaEp6TmtuNmF0SW5WY3lFWEZBWVUiLCJ5IjoiZVd2aS1EdktJTjVpSGRBR1h1dC1SNnhLa0Z5VEV0N1kwR0E4eUJaeFlnTSJ9LCJ0aW1lV2luZG93Ijp7ImVuZCI6IjIwMjYtMTAtMDlUMTI6NTA6MDAuMDAwWiIsInN0YXJ0IjoiMjAyNi0xMC0wOVQxMjoxMDowMC4wMDBaIn19.H6-IqGJ4QEirzFL1gOYewtAnYWbns2p5szGJsnOdVa0H_s8y2_-GuoCWzMVPFCbhxlEoZ2LShHZhPSj3KZUacw",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246ZGZhZTI3NGJiMmVhMjIzNzE4MGNkYmYxMzQ4NGI3MjdlNzAwYWY1ZDFiMGFlMDYzZmJhZjY0Njk4YTY1OWM1NjoyOTg4OGZlYjEyYzZmYTcyYmYyOGU3NTU4MTFkZmM0ZGVmYWI2NmVjOTQyOWZiYjdjN2I5NjcyODA0MGUzZjA0.F_Yyi7cSpZTIiZgbAOyKj4vBFFpnCiJLbD1e8cz_CpIm1DzVjoKLeh2Waj26J9XXBN-d-pnRL0q1H5ToFdTiSA"
+        },
+        {
+          "compact": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRycC1yZWNlaXB0In0.eyJib3VuZGFyaWVzIjoibmV2ZXIgc2VuZCBlbWFpbCB3aXRob3V0IGV4cGxpY2l0IGNvbmZpcm1hdGlvbiIsImRlbGVnYXRpb25JZCI6InR2LWNoYWluMy1sZWFmIiwiaW5zdHJ1Y3Rpb25zSGFzaCI6ImM3MzBkZTc1OGU1ODZlMTlhODEwOThmYTFjZDQwNzIxMTYyZGE5ODE3ZmE3ZjdlNjUxNTI0YTI3YzkzZWU0ZmIiLCJpc3N1ZWRBdCI6IjIwMjYtMTAtMDlUMTI6MDA6MDAuMDAwWiIsIm9wZXJhdG9ySW5zdHJ1Y3Rpb25zIjoiUmVhZCB0b2RheSdzIGNhbGVuZGFyIGV2ZW50cyBhbmQgZHJhZnQgYSBzdW1tYXJ5IGZvciB0aGUgMnBtIHN0YW5kdXAuIiwicGFyZW50UmVjZWlwdElkIjoiMjk4ODhmZWIxMmM2ZmE3MmJmMjhlNzU1ODExZGZjNGRlZmFiNjZlYzk0MjlmYmI3YzdiOTY3MjgwNDBlM2YwNCIsInNjb3BlIjoicmVhZCBjYWxlbmRhciBldmVudHMgYW5kIGRyYWZ0IG1lZXRpbmcgc3VtbWFyaWVzIiwic2NvcGVTY2hlbWEiOnsiYWxsb3dlZEFjdGlvbnMiOlt7Im9wZXJhdGlvbiI6InJlYWQiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2V2ZW50cyJ9LHsib3BlcmF0aW9uIjoid3JpdGUiLCJyZXNvdXJjZSI6ImNhbGVuZGFyL2RyYWZ0cyJ9XSwiZGVuaWVkQWN0aW9ucyI6W3sib3BlcmF0aW9uIjoiZGVsZXRlIiwicmVzb3VyY2UiOiJjYWxlbmRhci9ldmVudHMifV0sInZlcnNpb24iOiIxLjAifSwic2lnbmVyUHVibGljS2V5Ijp7ImNydiI6IlAtMjU2Iiwia3R5IjoiRUMiLCJ4IjoiLXQ4dnhDU3U1djhFcGplemlvR2FmckkyN01rNW1GUHZmVjFsLVZuNHBNcyIsInkiOiJlQVJCc2xjQXZZYmh0WTAxc3gtcFg0UFlpR0JEamxRcGdOMlB0eVE4ZjlvIn0sInRpbWVXaW5kb3ciOnsiZW5kIjoiMjAyNi0xMC0wOVQxMjo0MDowMC4wMDBaIiwic3RhcnQiOiIyMDI2LTEwLTA5VDEyOjIwOjAwLjAwMFoifX0._F_cbbmxiZ1IULlU-xQsIcbrw4cTiOpnj_gOCB-aVepqp4odODYD_q_c0diLGjt5r5gV7C-_sRKWz7e3TIP60w",
+          "orchestratorSignature": "eyJhbGciOiJFUzI1NiJ9.b3JjaGVzdHJhdG9yLWRlbGVnYXRpb246Mjk4ODhmZWIxMmM2ZmE3MmJmMjhlNzU1ODExZGZjNGRlZmFiNjZlYzk0MjlmYmI3YzdiOTY3MjgwNDBlM2YwNDpmNjFkYTEyY2U4OWE5NDYyNTA1ZWYyOGFjODkyNzMwZTEzMDNiZjBjYmFmN2MzZWIyNjk0MTRlYjNjNzdlZTc4.8mMt73Kp5U0RGKNf7qb8vAP5mMXU_Y0EU_3Ehu2B1ctKZNagx_PttUH-_y0YVX8LbJWhrirbDfFwD88vp-81bQ"
+        }
+      ]
+    }
+  ]
+}

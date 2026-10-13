@@ -6,8 +6,10 @@ import {
   base64urlDecode,
   base64urlEncode,
   ecJwkThumbprint,
+  ed25519Verify,
   es256Verify,
   jcsCanonicalize,
+  okpJwkThumbprint,
   sha256Hex,
 } from '../crypto.js';
 import type {
@@ -72,7 +74,11 @@ interface ReceiptBody {
   timeWindow: { start: string; end: string };
   operatorInstructions: string;
   instructionsHash: string;
-  signerPublicKey: { kty: 'EC'; crv: 'P-256'; x: string; y: string };
+  // Signing key. EC P-256 for the REQUIRED ES256 profile; OKP Ed25519 for
+  // the OPTIONAL EdDSA profile (draft -12 section 6.5).
+  signerPublicKey:
+    | { kty: 'EC'; crv: 'P-256'; x: string; y: string }
+    | { kty: 'OKP'; crv: 'Ed25519'; x: string };
   agentId: string | null;
   parentReceiptId: string | null;
   revocationRequired: boolean;
@@ -217,7 +223,9 @@ function validateHeader(
     errors.push('ALG_NONE_PROHIBITED');
   } else if (alg === undefined) {
     errors.push('ALG_MISSING');
-  } else if (alg !== 'ES256') {
+  } else if (alg !== 'ES256' && alg !== 'EdDSA') {
+    // Draft -12 section 6.5: ES256 REQUIRED, EdDSA OPTIONAL, everything else
+    // rejected.
     errors.push(`ALG_UNSUPPORTED:${String(alg)}`);
   }
 
@@ -392,22 +400,34 @@ function validateBody(payloadBytes: Uint8Array): {
 
   const jwk = known.signerPublicKey as Record<string, unknown> | undefined;
   let signerPublicKey: ReceiptBody['signerPublicKey'] | null = null;
-  if (
-    typeof jwk === 'object' &&
-    jwk !== null &&
-    jwk.kty === 'EC' &&
-    jwk.crv === 'P-256' &&
-    typeof jwk.x === 'string' &&
-    jwk.x.length > 0 &&
-    BASE64URL.test(jwk.x) &&
-    typeof jwk.y === 'string' &&
-    jwk.y.length > 0 &&
-    BASE64URL.test(jwk.y)
-  ) {
-    signerPublicKey = { kty: 'EC', crv: 'P-256', x: jwk.x, y: jwk.y };
-    const extra = Object.keys(jwk).filter((k) => !['kty', 'crv', 'x', 'y'].includes(k));
-    if (extra.length > 0) warnings.push(`SIGNER_JWK_EXTRA_MEMBERS:${extra.sort().join(',')}`);
-  } else {
+  if (typeof jwk === 'object' && jwk !== null) {
+    if (
+      jwk.kty === 'EC' &&
+      jwk.crv === 'P-256' &&
+      typeof jwk.x === 'string' &&
+      jwk.x.length > 0 &&
+      BASE64URL.test(jwk.x) &&
+      typeof jwk.y === 'string' &&
+      jwk.y.length > 0 &&
+      BASE64URL.test(jwk.y)
+    ) {
+      signerPublicKey = { kty: 'EC', crv: 'P-256', x: jwk.x, y: jwk.y };
+      const extra = Object.keys(jwk).filter((k) => !['kty', 'crv', 'x', 'y'].includes(k));
+      if (extra.length > 0) warnings.push(`SIGNER_JWK_EXTRA_MEMBERS:${extra.sort().join(',')}`);
+    } else if (
+      jwk.kty === 'OKP' &&
+      jwk.crv === 'Ed25519' &&
+      typeof jwk.x === 'string' &&
+      jwk.x.length > 0 &&
+      BASE64URL.test(jwk.x)
+    ) {
+      // RFC 8037: OKP keys carry no y coordinate.
+      signerPublicKey = { kty: 'OKP', crv: 'Ed25519', x: jwk.x };
+      const extra = Object.keys(jwk).filter((k) => !['kty', 'crv', 'x'].includes(k));
+      if (extra.length > 0) warnings.push(`SIGNER_JWK_EXTRA_MEMBERS:${extra.sort().join(',')}`);
+    }
+  }
+  if (signerPublicKey === null) {
     errors.push('SIGNER_PUBLIC_KEY_INVALID');
   }
 
@@ -513,12 +533,15 @@ function buildNormalized(
     format: 'authproof-jws',
     receiptId: parsed.receiptId,
     // The issuer is identified by the RFC 7638 thumbprint of the signing key.
-    issuer: ecJwkThumbprint(body.signerPublicKey),
+    issuer:
+      body.signerPublicKey.kty === 'OKP'
+        ? okpJwkThumbprint(body.signerPublicKey)
+        : ecJwkThumbprint(body.signerPublicKey),
     issuerKey: {
       kty: body.signerPublicKey.kty,
       crv: body.signerPublicKey.crv,
       x: body.signerPublicKey.x,
-      y: body.signerPublicKey.y,
+      ...(body.signerPublicKey.kty === 'EC' ? { y: body.signerPublicKey.y } : {}),
     },
     agent: body.agentId,
     scope,
@@ -551,18 +574,35 @@ function verifySignature(parsed: ParsedInput, body: ReceiptBody, errors: string[
     }
     return;
   }
-  const ok = es256Verify(
-    { x: body.signerPublicKey.x, y: body.signerPublicKey.y },
-    parsed.signingInput,
-    sig,
-  );
-  if (!ok) errors.push('SIGNATURE_INVALID');
+  const alg = parsed.header.alg;
+  const key = body.signerPublicKey;
+  if (alg === 'ES256') {
+    // Header algorithm and key curve must agree: a P-256 key under an EdDSA
+    // header (or vice versa) is a mismatch, never a valid signature.
+    if (key.kty !== 'EC' || key.crv !== 'P-256') {
+      errors.push('ALG_KEY_MISMATCH');
+      return;
+    }
+    const ok = es256Verify({ x: key.x, y: key.y }, parsed.signingInput, sig);
+    if (!ok) errors.push('SIGNATURE_INVALID');
+  } else if (alg === 'EdDSA') {
+    if (key.kty !== 'OKP' || key.crv !== 'Ed25519') {
+      errors.push('ALG_KEY_MISMATCH');
+      return;
+    }
+    const ok = ed25519Verify({ x: key.x }, parsed.signingInput, sig);
+    if (!ok) errors.push('SIGNATURE_INVALID');
+  }
+  // Any other alg value already produced an ALG_* error in validateHeader;
+  // there is nothing further to verify.
 }
 
 // Verifies an attached orchestratorSignature: a compact JWS whose payload is
 // the exact ASCII binding string
-// "orchestrator-delegation:<parentReceiptId>:<receiptId>" (draft -11 section
-// 4.4), signed by the parent receipt's key. Exported for verifyChain.
+// "orchestrator-delegation:<parentReceiptId>:<receiptId>" (draft -12 section
+// 4.4, clarified in -13 per authproof-sdk#15). The binding is signed by the
+// ORCHESTRATOR's key, i.e. the key that signed the CHILD (sub-)receipt, so it
+// verifies against the child's signerPublicKey. Exported for verifyChain.
 export function verifyOrchestratorSignature(
   parent: NormalizedReceipt,
   child: NormalizedReceipt,
@@ -575,17 +615,21 @@ export function verifyOrchestratorSignature(
     const header = JSON.parse(Buffer.from(base64urlDecode(parts[0])).toString('utf8')) as {
       alg?: unknown;
     };
-    if (header.alg !== 'ES256') return false;
+    const alg = header.alg;
+    if (alg !== 'ES256' && alg !== 'EdDSA') return false;
     const sig = base64urlDecode(parts[2]);
     if (sig.length !== 64) return false;
     const payloadText = Buffer.from(base64urlDecode(parts[1])).toString('utf8');
     const expected = `orchestrator-delegation:${child.parentId}:${child.receiptId}`;
     if (payloadText !== expected) return false;
-    return es256Verify(
-      { x: parent.issuerKey.x, y: parent.issuerKey.y as string },
-      ascii(`${parts[0]}.${parts[1]}`),
-      sig,
-    );
+    const key = child.issuerKey;
+    const input = ascii(`${parts[0]}.${parts[1]}`);
+    if (alg === 'ES256') {
+      if (key.crv !== 'P-256' || key.y === undefined) return false;
+      return es256Verify({ x: key.x, y: key.y }, input, sig);
+    }
+    if (key.crv !== 'Ed25519') return false;
+    return ed25519Verify({ x: key.x }, input, sig);
   } catch {
     return false;
   }
@@ -602,7 +646,8 @@ function detect(input: unknown): boolean {
       if (parts.length !== 3 || parts.some((p) => p.length === 0)) return false;
       const header = JSON.parse(Buffer.from(parts[0], 'base64url').toString('utf8'));
       return typeof header === 'object' && header !== null && !Array.isArray(header)
-        ? (header as { alg?: unknown }).alg === 'ES256'
+        ? (header as { alg?: unknown }).alg === 'ES256' ||
+          (header as { alg?: unknown }).alg === 'EdDSA'
         : false;
     }
     if (typeof input === 'object' && input !== null) {
@@ -617,7 +662,8 @@ function detect(input: unknown): boolean {
         return (
           typeof header === 'object' &&
           header !== null &&
-          (header as { alg?: unknown }).alg === 'ES256'
+          ((header as { alg?: unknown }).alg === 'ES256' ||
+            (header as { alg?: unknown }).alg === 'EdDSA')
         );
       }
       if (typeof obj.compact === 'string') {

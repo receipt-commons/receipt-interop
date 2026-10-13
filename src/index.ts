@@ -9,8 +9,10 @@ export {
   base64urlDecode,
   base64urlEncode,
   ecJwkThumbprint,
+  ed25519Verify,
   es256Verify,
   jcsCanonicalize,
+  okpJwkThumbprint,
   sha256Hex,
 } from './crypto.js';
 export {

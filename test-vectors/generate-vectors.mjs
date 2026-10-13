@@ -89,12 +89,12 @@ function makeDetached(bodyObj, priv, header = { alg: 'ES256', b64: false, crit: 
   };
 }
 
-function makeOrchestratorSig(parentPriv, parentId, childId) {
+function makeOrchestratorSig(orchestratorPriv, parentId, childId) {
   const binding = `orchestrator-delegation:${parentId}:${childId}`;
   const headerB64 = b64uJson({ alg: 'ES256' });
   const payloadB64 = base64urlEncode(Buffer.from(binding, 'utf8'));
   const sig = sign('sha256', Buffer.from(`${headerB64}.${payloadB64}`, 'ascii'), {
-    key: parentPriv,
+    key: orchestratorPriv,
     dsaEncoding: 'ieee-p1363',
   });
   return `${headerB64}.${payloadB64}.${base64urlEncode(sig)}`;
@@ -1003,7 +1003,7 @@ function buildHopChain() {
   };
   const childCompact = makeCompact(childBody, child.priv);
   const childId = normalize(childCompact).receiptId;
-  const orch = makeOrchestratorSig(root.priv, rootId, childId);
+  const orch = makeOrchestratorSig(child.priv, rootId, childId);
   return { root, child, rootCompact, rootId, childBody, childCompact, childId, orch };
 }
 
@@ -1014,7 +1014,7 @@ function buildHopChain() {
     id: 'chain-valid-2hop',
     category: 'chain',
     description:
-      'Valid 2-hop delegation chain: root signature, child signature, orchestratorSignature over the exact binding string "orchestrator-delegation:<parentId>:<childId>" verified against the parent key, child window contained in parent window, child scope a strict proper subset of the parent scope (2 < 3 allowed actions, parent denial preserved). Draft 4.4, 8.5, 8.7, 10 (check 14).',
+      'Valid 2-hop delegation chain: root signature, child signature, orchestratorSignature over the exact binding string "orchestrator-delegation:<parentId>:<childId>" verified against the child (orchestrator) key, child window contained in parent window, child scope a strict proper subset of the parent scope (2 < 3 allowed actions, parent denial preserved). Draft 4.4, 8.5, 8.7, 10 (check 14).',
     profile: 'jws-compact',
     mode: 'chain',
     draftSection: '8.7',
@@ -1085,8 +1085,8 @@ function buildHopChain() {
   const leafId = normalize(leafCompact).receiptId;
   const chain = [
     rootCompact,
-    { compact: midCompact, orchestratorSignature: makeOrchestratorSig(root.priv, rootId, midId) },
-    { compact: leafCompact, orchestratorSignature: makeOrchestratorSig(mid.priv, midId, leafId) },
+    { compact: midCompact, orchestratorSignature: makeOrchestratorSig(mid.priv, rootId, midId) },
+    { compact: leafCompact, orchestratorSignature: makeOrchestratorSig(leaf.priv, midId, leafId) },
   ];
   V({
     id: 'chain-valid-3hop',
@@ -1115,7 +1115,7 @@ function buildHopChain() {
   // compact form, whose header differs from the compact child's header, so
   // the orchestrator binding must use the DETACHED child's receiptId.
   const detChildId = normalize(decodeInput(det)).receiptId;
-  const detOrch = makeOrchestratorSig(c.root.priv, c.rootId, detChildId);
+  const detOrch = makeOrchestratorSig(c.child.priv, c.rootId, detChildId);
   const chain = [
     c.rootCompact,
     { detached: det.detached, payload_b64: det.payload_b64, orchestratorSignature: detOrch },
@@ -1163,7 +1163,7 @@ function buildHopChain() {
     c.rootCompact,
     {
       compact: wideCompact,
-      orchestratorSignature: makeOrchestratorSig(c.root.priv, c.rootId, wideId),
+      orchestratorSignature: makeOrchestratorSig(c.child.priv, c.rootId, wideId),
     },
   ];
   V({
@@ -1199,7 +1199,7 @@ function buildHopChain() {
     c.rootCompact,
     {
       compact: equalCompact,
-      orchestratorSignature: makeOrchestratorSig(c.root.priv, c.rootId, equalId),
+      orchestratorSignature: makeOrchestratorSig(c.child.priv, c.rootId, equalId),
     },
   ];
   V({
@@ -1242,7 +1242,7 @@ function buildHopChain() {
     c.rootCompact,
     {
       compact: dropCompact,
-      orchestratorSignature: makeOrchestratorSig(c.root.priv, c.rootId, dropId),
+      orchestratorSignature: makeOrchestratorSig(c.child.priv, c.rootId, dropId),
     },
   ];
   V({
@@ -1278,7 +1278,7 @@ function buildHopChain() {
     c.rootCompact,
     {
       compact: lateCompact,
-      orchestratorSignature: makeOrchestratorSig(c.root.priv, c.rootId, lateId),
+      orchestratorSignature: makeOrchestratorSig(c.child.priv, c.rootId, lateId),
     },
   ];
   V({
@@ -1310,7 +1310,7 @@ function buildHopChain() {
     c.rootCompact,
     {
       compact: misCompact,
-      orchestratorSignature: makeOrchestratorSig(c.root.priv, wrongParentId, misId),
+      orchestratorSignature: makeOrchestratorSig(c.child.priv, wrongParentId, misId),
     },
   ];
   V({
@@ -1422,8 +1422,8 @@ function buildHopChain() {
   const leafId = normalize(leafCompact).receiptId;
   const chain = [
     rootCompact,
-    { compact: midCompact, orchestratorSignature: makeOrchestratorSig(root.priv, rootId, midId) },
-    { compact: leafCompact, orchestratorSignature: makeOrchestratorSig(mid.priv, midId, leafId) },
+    { compact: midCompact, orchestratorSignature: makeOrchestratorSig(mid.priv, rootId, midId) },
+    { compact: leafCompact, orchestratorSignature: makeOrchestratorSig(leaf.priv, midId, leafId) },
   ];
   V({
     id: 'chain-depth-exceeded',

@@ -132,3 +132,36 @@ export function es256Verify(
     return false;
   }
 }
+
+// Ed25519 verification (RFC 8037 "EdDSA", RFC 8032). Signature is the raw
+// 64-byte EdDSA signature. Ed25519 hashes internally, so the hash algorithm
+// argument is null and the signing input is passed unhashed. Returns false
+// (fail closed) on any malformed key or signature.
+export function ed25519Verify(
+  key: { x: string },
+  signingInput: Uint8Array,
+  signature: Uint8Array,
+): boolean {
+  if (!(signature instanceof Uint8Array) || signature.length !== 64) return false;
+  try {
+    const pub = createPublicKey({
+      key: { kty: 'OKP', crv: 'Ed25519', x: key.x },
+      format: 'jwk',
+    });
+    return verify(null, signingInput, pub, signature);
+  } catch {
+    return false;
+  }
+}
+
+// RFC 7638 thumbprint for OKP keys: required members are crv, kty, x
+// (lexicographic order), no y.
+export function okpJwkThumbprint(jwk: { kty: string; crv: string; x: string }): string {
+  const canonical = jcsCanonicalize({
+    crv: jwk.crv,
+    kty: jwk.kty,
+    x: jwk.x,
+  });
+  const digest = createHash('sha256').update(canonical, 'utf8').digest();
+  return base64urlEncode(digest);
+}

@@ -54,12 +54,12 @@ function makeCompact(b: Record<string, unknown>, priv: KeyObject): string {
   return `${headerB64}.${payloadB64}.${base64urlEncode(sig)}`;
 }
 
-function makeOrchestratorSig(parentPriv: KeyObject, parentId: string, childId: string): string {
+function makeOrchestratorSig(signingPriv: KeyObject, parentId: string, childId: string): string {
   const binding = `orchestrator-delegation:${parentId}:${childId}`;
   const headerB64 = base64urlEncode(Buffer.from(JSON.stringify({ alg: 'ES256' }), 'utf8'));
   const payloadB64 = base64urlEncode(Buffer.from(binding, 'utf8'));
   const sig = sign('sha256', Buffer.from(`${headerB64}.${payloadB64}`, 'ascii'), {
-    key: parentPriv,
+    key: signingPriv,
     dsaEncoding: 'ieee-p1363',
   });
   return `${headerB64}.${payloadB64}.${base64urlEncode(sig)}`;
@@ -97,7 +97,7 @@ function buildChain(childOverrides: Record<string, unknown> = {}): Chain {
   });
   const childCompact = makeCompact(childBody, child.priv);
   const childId = normalize(childCompact).receiptId;
-  const orchSig = makeOrchestratorSig(root.priv, rootId, childId);
+  const orchSig = makeOrchestratorSig(child.priv, rootId, childId);
   return { root, child, rootCompact, rootId, childBody, childCompact, childId, orchSig };
 }
 

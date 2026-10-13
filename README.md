@@ -8,7 +8,7 @@ It verifies receipts. It does not enforce anything. If a malicious operator skip
 
 ## Supported formats
 
-- `authproof-jws` — the authproof draft JWS profile: compact and detached JWS receipts signed with ES256 (P-256), JSON Canonicalization Scheme payloads, structured scopes, optional orchestrator signatures on sub-receipts.
+- `authproof-jws` — the authproof draft JWS profile: compact and detached JWS receipts signed with ES256 (P-256, required) or EdDSA/Ed25519 (optional per draft -12 §6.5), JSON Canonicalization Scheme payloads, structured scopes, optional orchestrator signatures on sub-receipts.
 - `ucan` — UCAN 0.x (the embedded-JWT line, as implemented by ucan-wg/ts-ucan): Ed25519-signed capability tokens with audience-chained proofs.
 - `agent-passport` — Action Receipts v1.1 from the agent-passport-system repo: Ed25519 receipts over their canonical JSON, with delegation chains, per-hop scope narrowing, and spend limits.
 
@@ -65,7 +65,7 @@ Runs each registered verifier's `detect()` in registration order and returns the
 
 ### verifyReceipt(input: unknown, opts?: VerifyOptions): Promise<Verdict>
 
-Full verification for a single receipt: format detection, structural validation, signature check against the format's real cryptography (ES256 raw R||S for authproof, Ed25519 for UCAN and agent-passport), time-window check, and the optional issuer trust gate. Returns a `Verdict`:
+Full verification for a single receipt: format detection, structural validation, signature check against the format's real cryptography (ES256 raw R||S or Ed25519 for authproof, Ed25519 for UCAN and agent-passport), time-window check, and the optional issuer trust gate. Returns a `Verdict`:
 
 ```ts
 {

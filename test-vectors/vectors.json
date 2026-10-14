@@ -802,7 +802,8 @@
         "format": "authproof-jws",
         "errors": [],
         "warnings": [
-          "CHAIN_OK"
+          "CHAIN_OK",
+          "ORCHESTRATOR_SIG_OK"
         ],
         "receipt": {
           "receiptId": "285786c5ed3d9a61dc85bf3565a4a4c3926fae12dd71a2787ad9b314219ecac3",

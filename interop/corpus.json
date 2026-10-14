@@ -1,7 +1,7 @@
 {
   "format": "agent-delegation-receipt-interop-corpus/1",
   "draft": "draft-nelson-agent-delegation-receipts-12",
-  "generated": "2026-10-13",
+  "generated": "2026-10-14",
   "generator": "receipt-interop test-vectors (ES256, throwaway P-256 keys; test material only)",
   "profile": "JWS compact serialization, ES256 (REQUIRED per draft -12 section 6.5)",
   "verificationTime": "Each case carries its own `options.at`; verify as-of that instant.",
@@ -145,7 +145,8 @@
         "valid": true,
         "errors": [],
         "warnings": [
-          "CHAIN_OK"
+          "CHAIN_OK",
+          "ORCHESTRATOR_SIG_OK"
         ]
       },
       "options": {

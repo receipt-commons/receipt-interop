@@ -1102,7 +1102,7 @@ function buildHopChain() {
       valid: true,
       format: 'authproof-jws',
       errors: [],
-      warnings: ['CHAIN_OK'],
+      warnings: ['CHAIN_OK', 'ORCHESTRATOR_SIG_OK'],
       receipt: { receiptId: leafId, parentId: midId, scopeKind: 'structured' },
     },
   });
